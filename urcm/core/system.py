@@ -5,9 +5,12 @@ This module integrates all core components into a single, cohesive reasoning sys
 It provides an end-to-end pipeline from text input to converged semantic understanding.
 """
 
+import logging
 import numpy as np
 import time
 from typing import List, Optional, Dict, Any, Tuple, Callable
+
+logger = logging.getLogger(__name__)
 
 from urcm.core.data_models import (
     PhonemeSequence, FrequencyPath, ResonanceState, 
@@ -104,8 +107,8 @@ class URCMSystem:
         """
         try:
             record_event("process_start", {"text_len": len(text)})
-        except Exception:
-            pass
+        except Exception as e:
+            logger.warning(f"Failed to record process_start event: {e}")
         # Step 1: Phonemic Grounding
         freq_path = self.pipeline.process_text(text)
         
@@ -124,8 +127,8 @@ class URCMSystem:
             top = results[0] if results else None
             fm = float(top.mu_trajectory[-1]) if top and top.mu_trajectory else 0.0
             record_event("process_end", {"final_mu": fm, "paths": len(results)})
-        except Exception:
-            pass
+        except Exception as e:
+            logger.warning(f"Failed to record process_end event: {e}")
         return results[0]
 
     def _propose_next_states(self, current_state: ResonanceState) -> List[ResonanceState]:

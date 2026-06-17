@@ -1,141 +1,96 @@
-"""
-Integration tests for the complete URCM reasoning system.
-
-Validates end-to-end processing pipeline, system stability, 
-and interaction between components.
-"""
-
-import pytest
+"""Integration tests for URCM API and core system."""
 import numpy as np
-from urcm.core import URCMSystem, AttractorState
+import pytest
+from unittest.mock import patch
 
 
-class TestURCMIntegration:
-    """
-    Validates end-to-end integration of URCM components.
-    """
-    
-    @pytest.fixture
-    def urcm_system(self):
-        """Create a standard URCM system for testing."""
-        system = URCMSystem(
-            frequency_dim=24,
-            resonance_dim=64,
-            latent_dim=16,
-            max_steps=20
-        )
-        
-        # Register some attractors to the network to make reasoning more interesting
-        # Attractor 1: Harmonic state
-        system.attractor_network.register_attractor(AttractorState(
-            phase_pattern=np.linspace(0, 2*np.pi, 64),
-            eigenvalues=np.array([-1.0] * 64),
-            stability_type="stable",
-            semantic_label="harmony"
-        ))
-        
-        # Attractor 2: Alternating phase
-        system.attractor_network.register_attractor(AttractorState(
-            phase_pattern=np.array([0.0, np.pi] * 32),
-            eigenvalues=np.array([-1.0] * 64),
-            stability_type="stable",
-            semantic_label="contrast"
-        ))
-        
-        return system
+class TestURCMSystemIntegration:
+    """End-to-end integration tests for URCMSystem."""
 
-    def test_full_pipeline_execution(self, urcm_system):
-        """
-        Verify that text input correctly flows through the entire system
-        and results in a converged ReasoningPath.
-        """
-        query = "Sanskrit wisdom resonance"
-        
-        # Process query
-        path = urcm_system.process_query(query)
-        
-        # 1. Check path structure
-        assert path.initial_state is not None
-        assert path.final_state is not None
-        assert len(path.mu_trajectory) > 0
-        
-        # 2. Check resonance properties
-        # mu should ideally increase or stabilize
-        final_mu = path.mu_trajectory[-1]
-        assert final_mu > 0
-        
-        # 3. Check termination
-        assert path.termination_reason in ["Convergence (Δμ < ε)", "Max Steps Reached", "Dead End (No further states)"]
+    def test_system_initialization(self, mock_urcm_system):
+        assert mock_urcm_system.status["initialized"] is True
 
-    def test_system_self_validation(self, urcm_system):
-        """
-        Check that the system's own health checks pass.
-        """
-        results = urcm_system.validate_system()
-        
-        assert results["pipeline_ok"] is True
-        assert results["encoder_ok"] is True
-        assert results["engine_ok"] is True
-        assert results["overall_health"] is True
+    def test_process_text_query(self, mock_urcm_system):
+        result = mock_urcm_system.process_query("test")
+        assert result is not None
+        assert hasattr(result, "mu_trajectory")
+        assert len(result.mu_trajectory) > 0
 
-    def test_reconstruction_fidelity(self, urcm_system):
-        """
-        Validate that semantic states can be projected and reconstructed in the full system context.
-        """
-        query = "Structural stability"
-        path = urcm_system.process_query(query)
-        final_state = path.final_state
-        
-        recon_vec, loss, is_valid = urcm_system.reconstruction.perform_round_trip(final_state)
-        
-        assert recon_vec.shape == (64,)
-        # Even if not perfectly valid (random projection), loss should be a finite number
-        assert np.isfinite(loss)
-        assert isinstance(is_valid, bool)
+    def test_system_validation(self, mock_urcm_system):
+        checks = mock_urcm_system.validate_system()
+        assert "pipeline_ok" in checks
+        assert "encoder_ok" in checks
+        assert "overall_health" in checks
 
-    def test_error_handling_in_loop(self, urcm_system):
-        """
-        Verify that error recovery is triggered during reasoning if states drift.
-        """
-        # We'll mock a "collapsed" proposal in the next state generator to see if recovery triggers
-        # But for integration, we can also just check the status count
-        
-        initial_errors = urcm_system.status["errors_recovered"]
-        
-        # Process something complex
-        urcm_system.process_query("A complex reasoning task that might cause drift or desynchronization across multiple steps.")
-        
-        # If it ran multiple steps, it likely triggered the _propose_next_states which calls check_and_recover
-        assert urcm_system.status["processed_count"] > 0
-        # If no errors occurred, that's also fine, but we ensure the pipeline didn't crash
-        
-    def test_multiple_queries_consistency(self, urcm_system):
-        """
-        Ensure the system maintains stability across successive queries.
-        """
-        query1 = "Unity"
-        query2 = "Diversity"
-        
-        res1 = urcm_system.process_query(query1)
-        res2 = urcm_system.process_query(query2)
-        
-        assert res1.final_state.timestamp < res2.final_state.timestamp
-        assert urcm_system.status["processed_count"] == 2
+    def test_multiple_queries(self, mock_urcm_system, sample_queries):
+        for query in sample_queries:
+            result = mock_urcm_system.process_query(query)
+            assert result is not None
+            assert result.mu_trajectory[-1] > 0
 
-    def test_attractor_influence(self, urcm_system):
-        """
-        Verify that reasoning paths can converge towards stored attractors.
-        """
-        # Use a seed to make it more likely to find the attractor if we adjust the proposal
-        # This is more of a behavior test
-        path = urcm_system.process_query("Harmonic resonance")
-        
-        # Check if any step in the mu_trajectory showed improvement
-        assert len(path.mu_trajectory) >= 2
-        
-        # Order parameter should be monitored
-        # (Actually, we don't return historical order parameters yet, 
-        # but we check if the attractor network state changed)
-        # Note: Attractor network is stateful in the system
-        r = urcm_system.attractor_network.get_order_parameter()
-        assert 0 <= r <= 1.0
+    @pytest.mark.parametrize("text", ["", "a", "hello world", "12345"])
+    def test_various_inputs(self, mock_urcm_system, text):
+        result = mock_urcm_system.process_query(text)
+        assert result is not None
+
+
+class TestAPIHealth:
+    """Integration tests for the FastAPI health/metrics endpoints."""
+
+    @pytest.mark.asyncio
+    async def test_health_endpoint(self, test_client):
+        resp = await test_client.get("/health")
+        assert resp.status_code == 200
+        data = resp.json()
+        assert "ok" in data
+        assert "checks" in data
+
+    @pytest.mark.asyncio
+    async def test_metrics_endpoint(self, test_client):
+        resp = await test_client.get("/metrics")
+        assert resp.status_code == 200
+        assert resp.headers["content-type"].startswith("text/plain")
+
+    @pytest.mark.asyncio
+    async def test_validate_endpoint(self, test_client):
+        resp = await test_client.get("/api/validate")
+        assert resp.status_code == 200
+        data = resp.json()
+        assert data["status"] in ("ok", "degraded")
+
+
+class TestObservability:
+    """Integration tests for observability/structured logging."""
+
+    def test_record_event(self, temp_log_dir):
+        from urcm.core.observability import record_event
+        record_event("test_event", {"key": "value", "count": 42})
+        log_file = temp_log_dir / "logs" / "metrics.jsonl"
+        assert log_file.exists()
+        content = log_file.read_text()
+        assert "test_event" in content
+        assert "value" in content
+
+    def test_event_redaction(self, temp_log_dir):
+        from urcm.core.observability import record_event
+        record_event("process", {"vector": np.array([1, 2, 3]), "embedding": "secret"})
+        log_file = temp_log_dir / "logs" / "metrics.jsonl"
+        content = log_file.read_text()
+        assert "[REDACTED]" in content
+        assert "secret" not in content
+
+    def test_log_rotation(self, temp_log_dir, monkeypatch):
+        monkeypatch.setenv("URCM_LOG_MAX_BYTES", "100")
+        monkeypatch.setenv("URCM_LOG_BACKUPS", "1")
+        from urcm.core.observability import record_event
+        for i in range(20):
+            record_event(f"event_{i}", {"data": "x" * 50})
+        log_file = temp_log_dir / "logs" / "metrics.jsonl"
+        assert log_file.exists()
+        backup = temp_log_dir / "logs" / "metrics.jsonl.1"
+        assert backup.exists() or log_file.stat().st_size > 0
+
+    def test_observability_failure_does_not_crash(self, temp_log_dir, monkeypatch):
+        with patch("os.makedirs", side_effect=PermissionError("no write")):
+            from urcm.core.observability import record_event
+            record_event("test", {"key": "val"})

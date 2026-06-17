@@ -1,7 +1,10 @@
 import os
 import json
+import logging
 from urllib.parse import urlparse, parse_qs
 from http.server import BaseHTTPRequestHandler, HTTPServer
+
+logger = logging.getLogger(__name__)
 
 def aggregate(log_dir, env=None):
     path = os.path.join(log_dir, "logs", "metrics.jsonl")
@@ -57,8 +60,8 @@ def aggregate(log_dir, env=None):
                     v = e.get("delta_mu")
                     if isinstance(v, (int, float)):
                         gauges["last_delta_mu"] = float(v)
-    except Exception:
-        pass
+    except OSError as e:
+        logger.warning(f"Metrics aggregation failed: {e}")
     return counts, gauges
 
 def render_metrics(log_dir, env=None):
@@ -146,7 +149,8 @@ class Handler(BaseHTTPRequestHandler):
             else:
                 self.send_response(404)
                 self.end_headers()
-        except Exception:
+        except Exception as e:
+            logger.error(f"Handler failed: {e}")
             self.send_response(500)
             self.end_headers()
 
