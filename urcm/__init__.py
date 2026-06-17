@@ -8,6 +8,9 @@ discrete token-based processing with continuous frequency-based representations.
 __version__ = "0.1.0"
 __author__ = "URCM Development Team"
 
+from . import core
+from . import api
+
 from .core.data_models import (
     PhonemeSequence,
     FrequencyPath,

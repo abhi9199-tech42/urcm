@@ -1,0 +1,26 @@
+services:
+  urcm-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8008:8008"
+    environment:
+      - URCM_METRICS_BIND=0.0.0.0
+      - URCM_METRICS_PORT=8008
+      - URCM_ENV=production
+      - URCM_ADMIN_KEY=${URCM_ADMIN_KEY:-}
+      - URCM_METRICS_TOKEN=${URCM_METRICS_TOKEN:-}
+      - URCM_CORS_ORIGINS=${URCM_CORS_ORIGINS:-*}
+      - URCM_SLO_MIN_FINAL_MU=0.4
+      - URCM_SLO_MAX_STEPS_RATE=0.5
+      - URCM_RATE_LIMIT=100
+    volumes:
+      - ./logs:/app/logs
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request, json; r = urllib.request.urlopen('http://localhost:8008/health', timeout=5); exit(0 if json.loads(r.read()).get('ok') else 1)"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 15s
+    restart: unless-stopped
