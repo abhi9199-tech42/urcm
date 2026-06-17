@@ -3,6 +3,7 @@ import numpy as np
 from typing import List, Optional, Callable, Dict, Tuple
 from urcm.core.data_models import ResonanceState, ReasoningPath
 from urcm.core.theory import URCMTheory
+from urcm.core.observability import record_event
 
 class MuConvergenceEngine:
     """
@@ -18,7 +19,9 @@ class MuConvergenceEngine:
         rho_threshold: float = 0.5,
         convergence_epsilon: float = 1e-3,
         max_steps: int = 50,
-        competition_beam_width: int = 3
+        competition_beam_width: int = 3,
+        oscillation_window: int = 4,
+        oscillation_std_threshold: float = 0.02
     ):
         """
         Initialize the convergence engine.
@@ -33,6 +36,8 @@ class MuConvergenceEngine:
         self.convergence_epsilon = convergence_epsilon
         self.max_steps = max_steps
         self.beam_width = competition_beam_width
+        self.osc_window = max(oscillation_window, 3)
+        self.osc_std_thresh = max(oscillation_std_threshold, 0.0)
         
     def calculate_state_metrics(self, state: ResonanceState) -> ResonanceState:
         """
@@ -44,8 +49,8 @@ class MuConvergenceEngine:
         
         if state.rho_density == 0.0 and state.chi_cost == 0.0:
             rho = URCMTheory.calculate_rho(state.resonance_vector)
-            # For initial state (no transition), cost is 0
-            chi = 0.0
+            # Define base transformation cost relative to neutral origin to avoid zero chi
+            chi = float(np.linalg.norm(state.resonance_vector))
             mu = URCMTheory.compute_mu(rho, chi)
             
             # stability = mu
@@ -62,6 +67,33 @@ class MuConvergenceEngine:
                 timestamp=state.timestamp
             )
         return state
+    
+    def _maybe_emit_oscillation(self, mu_traj: List[float], step: int):
+        """
+        Detects oscillation in recent μ deltas and emits a telemetry event.
+        Heuristic: sign-alternating Δμ in the last window and non-trivial std.
+        """
+        try:
+            if len(mu_traj) < self.osc_window + 1:
+                return
+            window = mu_traj[-(self.osc_window+1):]
+            deltas = [window[i+1] - window[i] for i in range(len(window)-1)]
+            # Require alternating signs across the window
+            signs = [1 if d > 0 else (-1 if d < 0 else 0) for d in deltas]
+            # Ignore zeros for alternation check
+            filtered = [s for s in signs if s != 0]
+            if len(filtered) < self.osc_window:
+                return
+            alternates = all(filtered[i] != filtered[i-1] for i in range(1, len(filtered)))
+            std = float(np.std(window))
+            if alternates and std >= self.osc_std_thresh:
+                record_event("mu_oscillation_detected", {
+                    "step": int(step),
+                    "std": std,
+                    "window": [float(x) for x in window]
+                })
+        except Exception:
+            pass
 
     def evaluate_paths(self, active_paths: List[ReasoningPath]) -> List[ReasoningPath]:
         """
@@ -113,6 +145,10 @@ class MuConvergenceEngine:
         """
         # Bootstrap initial path
         initial_state = self.calculate_state_metrics(initial_state)
+        try:
+            record_event("mu_loop_start", {"mu": float(initial_state.mu_value), "rho": float(initial_state.rho_density), "chi": float(initial_state.chi_cost)})
+        except Exception:
+            pass
         
         root_path = ReasoningPath(
             initial_state=initial_state,
@@ -181,12 +217,23 @@ class MuConvergenceEngine:
                         termination_reason="Running"
                     )
                     
+                    try:
+                        if len(new_trajectory) >= 2:
+                            dm = float(abs(new_trajectory[-1] - new_trajectory[-2]))
+                        else:
+                            dm = 0.0
+                        record_event("mu_step", {"step": step_count, "mu": float(mu), "delta_mu": dm})
+                    except Exception:
+                        pass
+                    
                     # Check convergence immediately for this new step
                     if self.check_convergence(new_path):
                         new_path.convergence_achieved = True
                         new_path.termination_reason = "Convergence (Δμ < ε)"
                         completed_paths.append(new_path)
                     else:
+                        # Oscillation detector on the extended μ trajectory
+                        self._maybe_emit_oscillation(new_path.mu_trajectory, step_count)
                         new_candidates.append(new_path)
             
             # Competition: Select best active candidates to continue
@@ -198,8 +245,15 @@ class MuConvergenceEngine:
             completed_paths.append(path)
             
         # Return all completed paths, sorted by final mu stability
-        return sorted(
+        results = sorted(
             completed_paths, 
             key=lambda p: p.mu_trajectory[-1] if p.mu_trajectory else 0.0, 
             reverse=True
         )
+        try:
+            for p in results:
+                m = float(p.mu_trajectory[-1]) if p.mu_trajectory else 0.0
+                record_event("mu_path_complete", {"final_mu": m, "converged": bool(p.convergence_achieved), "reason": p.termination_reason})
+        except Exception:
+            pass
+        return results

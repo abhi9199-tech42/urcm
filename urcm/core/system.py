@@ -21,6 +21,7 @@ from urcm.core.latent_space import SemanticLatentSpace, ReconstructionSystem
 from urcm.core.attractor_network import AttractorNetwork
 from urcm.core.error_handling import ErrorRecoverySystem
 from urcm.core.performance import OptimizedPhonemeSet
+from urcm.core.observability import record_event
 
 
 class URCMSystem:
@@ -33,7 +34,7 @@ class URCMSystem:
     def __init__(
         self,
         frequency_dim: int = 24,
-        resonance_dim: int = 64,
+        resonance_dim: int = 512, # Increased from 64 to 512 for higher capacity
         latent_dim: int = 16,
         base_frequency: float = 1.0,
         beam_width: int = 3,
@@ -101,6 +102,10 @@ class URCMSystem:
         3. Initial State -> Reasoning Loop (Convergence)
         4. Converged Path -> Result
         """
+        try:
+            record_event("process_start", {"text_len": len(text)})
+        except Exception:
+            pass
         # Step 1: Phonemic Grounding
         freq_path = self.pipeline.process_text(text)
         
@@ -115,8 +120,12 @@ class URCMSystem:
         )
         
         self.status["processed_count"] += 1
-        
-        # Return the highest-resonance path
+        try:
+            top = results[0] if results else None
+            fm = float(top.mu_trajectory[-1]) if top and top.mu_trajectory else 0.0
+            record_event("process_end", {"final_mu": fm, "paths": len(results)})
+        except Exception:
+            pass
         return results[0]
 
     def _propose_next_states(self, current_state: ResonanceState) -> List[ResonanceState]:
@@ -131,7 +140,7 @@ class URCMSystem:
         # Here we simulate 3 candidate directions:
         
         # 1. Follow current rhythm (Pure Gating)
-        gated_vec = self.gating.apply_gating(current_state.resonance_vector, dt=0.1)
+        gated_vec = self.gating.apply_gating(current_state.resonance_vector, dt=0.05)
         candidates.append(self._create_candidate(current_state, gated_vec, "rhythm"))
         
         # 2. Move towards nearest attractor (Semantic Attraction)
@@ -142,12 +151,12 @@ class URCMSystem:
         
         attractor = self.attractor_network.find_nearest_attractor()
         if attractor:
-            # Blend current state with attractor pattern
-            attracted_vec = 0.8 * gated_vec + 0.2 * attractor.phase_pattern[:self.resonance_dim]
+            # Blend current state with attractor pattern (favor stability to improve μ more consistently)
+            attracted_vec = 0.9 * gated_vec + 0.1 * attractor.phase_pattern[:self.resonance_dim]
             candidates.append(self._create_candidate(current_state, attracted_vec, "attractor"))
         
         # 3. Multi-path exploration (Noise/Drift)
-        noise = np.random.normal(0, 0.05, self.resonance_dim)
+        noise = np.random.normal(0, 0.02, self.resonance_dim)
         noisy_vec = gated_vec + noise
         candidates.append(self._create_candidate(current_state, noisy_vec, "exploration"))
         

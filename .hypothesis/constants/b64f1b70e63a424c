@@ -1,0 +1,4 @@
+# file: C:\Users\kriti\OneDrive\Unified μ-Resonance Cognitive Mesh (URCM)\urcm\core\safety.py
+# hypothesis_version: 6.148.8
+
+[1e-09, 0.001, 0.05, 0.1, 0.99, 1.5, 5.0, 10.0, 'URCM_ADMIN_OVERRIDE', 'core_logic_rewrite', 'weight_update']

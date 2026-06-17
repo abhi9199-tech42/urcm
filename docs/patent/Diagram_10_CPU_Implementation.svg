@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="320">
+  <style>
+    .box{fill:#f9fafb;stroke:#111;stroke-width:1}
+    .label{font-family:Arial;font-size:12px;fill:#111}
+    .title{font-family:Arial;font-size:14px;fill:#111}
+  </style>
+  <text x="20" y="24" class="title">Fig 10 — CPU Implementation</text>
+  <rect x="80" y="80" width="140" height="50" class="box"/><text x="90" y="110" class="label">CPU</text>
+  <rect x="260" y="80" width="160" height="50" class="box"/><text x="270" y="110" class="label">Cache</text>
+  <rect x="440" y="80" width="160" height="50" class="box"/><text x="450" y="110" class="label">Memory</text>
+  <rect x="620" y="60" width="280" height="160" class="box"/><text x="630" y="90" class="label">URCM Modules</text>
+  <text x="640" y="120" class="label">Resonance Encoder</text>
+  <text x="640" y="140" class="label">Reservoir + Governor</text>
+  <text x="640" y="160" class="label">Working Memory</text>
+  <text x="640" y="180" class="label">Logic + Metacognition</text>
+</svg>

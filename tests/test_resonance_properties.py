@@ -120,7 +120,7 @@ class TestResonanceProperties:
         assert r_state.chi_cost >= 0.0, "Chi cost is negative"
         
         # Check mu (Resonance) - must match rho/chi relationship
-        expected_mu = r_state.rho_density / (r_state.chi_cost + 1e-9)
+        expected_mu = r_state.rho_density / (1.0 + r_state.chi_cost)
         assert np.isclose(r_state.mu_value, expected_mu, 1e-5), "Mu value formulation inconsistent"
         
         # Check stability score (derived from mu and smoothness)

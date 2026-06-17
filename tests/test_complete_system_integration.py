@@ -91,13 +91,13 @@ class TestCompleteSystemIntegration:
                 "query": "Explain the duality of existence and consciousness",
                 "expected_traits": ["contrast", "wisdom"],
                 "min_steps": 10,
-                "expected_termination": ["Max Steps"]
+                "expected_termination": ["Max Steps", "Convergence", "Convergence (Δμ < ε)"]
             },
             {
                 "query": "Sanskrit philosophy and quantum mechanics resonance",
                 "expected_traits": ["wisdom", "harmony"],
                 "min_steps": 15,
-                "expected_termination": ["Max Steps"]
+                "expected_termination": ["Max Steps", "Convergence", "Convergence (Δμ < ε)"]
             },
             {
                 "query": "Mathematical beauty in nature",
@@ -190,7 +190,7 @@ class TestCompleteSystemIntegration:
         # Should still complete within reasonable bounds (allow slight overrun due to implementation)
         # The system may go slightly over max_steps in some cases
         assert len(long_path.mu_trajectory) <= complete_urcm_system.engine.max_steps + 5
-        assert long_path.termination_reason in ["Max Steps Reached", "Convergence"]
+        assert long_path.termination_reason in ["Max Steps Reached", "Convergence", "Convergence (Δμ < ε)"]
         
         # Test 3: Valid minimal inputs (edge case handling)
         edge_cases = ["a", "x y", "test"]

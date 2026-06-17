@@ -1,0 +1,4 @@
+# file: C:\Users\kriti\OneDrive\Unified μ-Resonance Cognitive Mesh (URCM)\urcm\core\convergence_engine.py
+# hypothesis_version: 6.148.8
+
+[0.0, 0.001, 0.02, 0.5, 'Convergence (Δμ < ε)', 'Max Steps Reached', 'Running', 'chi', 'converged', 'delta_mu', 'final_mu', 'mu', 'mu_loop_start', 'mu_path_complete', 'mu_step', 'reason', 'rho', 'std', 'step', 'window']

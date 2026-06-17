@@ -1,0 +1,4 @@
+# file: C:\Users\kriti\OneDrive\Unified μ-Resonance Cognitive Mesh (URCM)\urcm\core\sanskrit_grammar.py
+# hypothesis_version: 6.148.8
+
+['(a|ā)\\s+(a|ā)', '(a|ā)\\s+(i|ī)', '(a|ā)\\s+(u|ū)', '(i|ī)\\s+(a|ā)', '(u|ū)\\s+(a|ā)', 'a', 'agent', 'ah', 'ah\\s+([a])', 'ah\\s+([gdjbvmnylrh])', 'am', 'asya', 'at', 'e', 'ena', 'instrument', 'location', 'o', 'o \\1', 'object', 'relation', 'source', 'ti', 'va', 'ya', 'ā']

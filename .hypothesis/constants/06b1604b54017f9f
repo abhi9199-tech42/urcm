@@ -1,0 +1,4 @@
+# file: C:\Users\kriti\OneDrive\Unified μ-Resonance Cognitive Mesh (URCM)\urcm\core\hierarchical_encoder.py
+# hypothesis_version: 6.148.8
+
+[128, 'W_in', 'W_out', 'W_res', 'bias', 'config', 'l1_W_in', 'l1_W_res', 'l1_input_dim', 'l1_res_dim', 'l2_W_in', 'l2_W_res', 'l2_res_dim', 'layer1', 'layer2', 'rb', 'recurrent_numpy', 'urcm_hierarchy.pkl', 'urcm_weights.pkl', 'wb']

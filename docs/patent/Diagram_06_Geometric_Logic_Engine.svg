@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="320">
+  <style>
+    .box{fill:#f9fafb;stroke:#111;stroke-width:1}
+    .label{font-family:Arial;font-size:12px;fill:#111}
+    .title{font-family:Arial;font-size:14px;fill:#111}
+    .arrow{stroke:#111;stroke-width:1;marker-end:url(#m)}
+  </style>
+  <defs>
+    <marker id="m" markerWidth="10" markerHeight="10" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L6,3 L0,6 Z" fill="#111"/>
+    </marker>
+  </defs>
+  <text x="20" y="24" class="title">Fig 6 — Geometric Logic Engine</text>
+  <rect x="80" y="80" width="140" height="50" class="box"/><text x="90" y="110" class="label">Vector A</text>
+  <rect x="80" y="160" width="140" height="50" class="box"/><text x="90" y="190" class="label">Vector B</text>
+  <rect x="280" y="120" width="160" height="50" class="box"/><text x="290" y="150" class="label">Logic Operator</text>
+  <rect x="500" y="120" width="160" height="50" class="box"/><text x="510" y="150" class="label">Output Vector</text>
+  <line x1="220" y1="105" x2="280" y2="145" class="arrow"/>
+  <line x1="220" y1="185" x2="280" y2="145" class="arrow"/>
+  <line x1="440" y1="145" x2="500" y2="145" class="arrow"/>
+</svg>

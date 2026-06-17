@@ -1,0 +1,64 @@
+Transformer vs URCM
+
+Summary
+- Transformers: token-based sequence models with attention; excel at language generation and pattern recognition at scale.
+- URCM: concept-space resonance system with energy descent, logic gates, values, and deterministic concept mapping; aims for structured cognition.
+
+Core Paradigm
+- Transformer: discrete tokens, attention over context, next-token prediction objective.
+- URCM: continuous concept vectors, energy minimization, constraints from logic and values, trajectory-based cognition.
+
+Representation
+- Transformer: learned embeddings and contextual states per token.
+- URCM: deterministic concept vectors [ingest.py](file:///C:/Users/kriti/OneDrive/Unified%20%C2%B5-Resonance%20Cognitive%20Mesh%20(URCM)/urcm/core/ingest.py), resonance states [resonance_encoder.py](file:///C:/Users/kriti/OneDrive/Unified%20%C2%B5-Resonance%20Cognitive%20Mesh%20(URCM)/urcm/core/resonance_encoder.py).
+
+Learning
+- Transformer: large-scale gradient training on massive corpora; fine-tuning/adapters for tasks.
+- URCM: deterministic seeding + deposition into memory via trajectories [memory.py](file:///C:/Users/kriti/OneDrive/Unified%20%C2%B5-Resonance%20Cognitive%20Mesh%20(URCM)/urcm/core/memory.py); lightweight ingestion of relations.
+
+Reasoning
+- Transformer: emergent reasoning via scale; chain-of-thought is token-level narrative.
+- URCM: energy descent with explicit logic constraints [logic_gates.py](file:///C:/Users/kriti/OneDrive/Unified%20%C2%B5-Resonance%20Cognitive%20Mesh%20(URCM)/urcm/core/logic_gates.py); planner and explanation functions [executive.py](file:///C:/Users/kriti/OneDrive/Unified%20%C2%B5-Resonance%20Cognitive%20Mesh%20(URCM)/urcm/core/executive.py).
+
+Memory
+- Transformer: parameter memory + context window; external memory via tool-specific augmentation.
+- URCM: geometric memory with attractor deposition and concept map [memory.py](file:///C:/Users/kriti/OneDrive/Unified%20%C2%B5-Resonance%20Cognitive%20Mesh%20(URCM)/urcm/core/memory.py); relations stored for inference [ingest.py](file:///C:/Users/kriti/OneDrive/Unified%20%C2%B5-Resonance%20Cognitive%20Mesh%20(URCM)/urcm/core/ingest.py).
+
+Knowledge & Semantics
+- Transformer: statistical semantics; relations implicit in parameters; explicit extraction requires prompting/pipelines.
+- URCM: explicit quantifiers, implication, exceptions, coreference captured at ingestion [ingest.py](file:///C:/Users/kriti/OneDrive/Unified%20%C2%B5-Resonance%20Cognitive%20Mesh%20(URCM)/urcm/core/ingest.py).
+
+Multimodal
+- Transformer: dedicated architectures (Vision Transformers, audio encoders); CLIP/Whisper integrate modalities.
+- URCM: placeholder encoders upgraded with content features and optional histograms [multimodal.py](file:///C:/Users/kriti/OneDrive/Unified%20%C2%B5-Resonance%20Cognitive%20Mesh%20(URCM)/urcm/core/multimodal.py).
+
+Safety & Values
+- Transformer: post-hoc alignment (RLHF, constitutional AI); value adherence depends on dataset and training.
+- URCM: values embedded as attractors/repulsors and filters [values.py](file:///C:/Users/kriti/OneDrive/Unified%20%C2%B5-Resonance%20Cognitive%20Mesh%20(URCM)/urcm/core/values.py); refusal built-in via AXIOM.
+
+Interpretability
+- Transformer: attention maps and probing; explanations are text-level approximations.
+- URCM: returns discovered chains and contradiction tags [executive.py](file:///C:/Users/kriti/OneDrive/Unified%20%C2%B5-Resonance%20Cognitive%20Mesh%20(URCM)/urcm/core/executive.py); logic gradients reveal constraint influences [logic_gates.py](file:///C:/Users/kriti/OneDrive/Unified%20%C2%B5-Resonance%20Cognitive%20Mesh%20(URCM)/urcm/core/logic_gates.py).
+
+Metrics
+- Transformer: perplexity, accuracy, BLEU, etc.
+- URCM: μ = ρ/(1+χ) with convergence label “Convergence (Δμ < ε)” [convergence_engine.py](file:///C:/Users/kriti/OneDrive/Unified%20%C2%B5-Resonance%20Cognitive%20Mesh%20(URCM)/urcm/core/convergence_engine.py).
+
+Compute & Efficiency
+- Transformer: heavy training/inference compute; scaling improves quality.
+- URCM: lightweight ingestion and reasoning; compute dominated by resonance steps and logic constraints.
+
+Failure Modes
+- Transformer: hallucination, prompt sensitivity, brittle long-range reasoning without tools.
+- URCM: weak perception until upgraded encoders; needs richer world models and memory hierarchy for complex tasks.
+
+Where Each Excels
+- Transformer: fluent generation, broad knowledge, robust downstream performance with fine-tuning.
+- URCM: structured reasoning, interpretability, safety-first alignment, explicit relations and logic control.
+
+Hybrid Patterns
+- Use URCM to structure thought and values; use Transformer via AXIOM for fluent generation [llm_bridge.py](file:///C:/Users/kriti/OneDrive/Unified%20%C2%B5-Resonance%20Cognitive%20Mesh%20(URCM)/urcm/core/llm_bridge.py), [axiom.py](file:///C:/Users/kriti/OneDrive/Unified%20%C2%B5-Resonance%20Cognitive%20Mesh%20(URCM)/axiom.py).
+- Add modern encoders to URCM to improve perception; keep μ convergence for stability tracking.
+
+Roadmap Implications
+- Combine URCM’s logic/values and convergence metrics with Transformer-scale perception and language; target generalization, tool use, and memory systems.

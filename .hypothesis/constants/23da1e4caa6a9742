@@ -1,0 +1,4 @@
+# file: C:\Users\kriti\OneDrive\Unified μ-Resonance Cognitive Mesh (URCM)\urcm\core\phoneme_mapper.py
+# hypothesis_version: 6.148.8
+
+[-0.3, 0.0, 0.1, 0.3, 1.0, 2.0, ',', '-', '.', 'a', 'additional', 'ai', 'au', 'b', 'bh', 'c', 'ch', 'd', 'dentals', 'dh', 'e', 'english', 'f', 'g', 'gh', 'h', 'i', 'j', 'jh', 'k', 'kh', 'l', 'labials', 'm', 'n', 'o', 'p', 'palatals', 'ph', 'q', 'r', 'retroflexes', 's', 'sanskrit', 'semivowels', 'sibilants', 't', 'th', 'u', 'v', 'velars', 'vowels', 'w', 'x', 'y', 'z', 'ñ', 'ā', 'ī', 'ś', 'ū', 'ḍ', 'ḍh', 'ḥ', 'ḷ', 'ḹ', 'ṃ', 'ṅ', 'ṇ', 'ṛ', 'ṝ', 'ṣ', 'ṭ', 'ṭh']

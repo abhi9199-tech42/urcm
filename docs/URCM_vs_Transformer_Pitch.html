@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html><head><meta charset='utf-8'><title>URCM vs Transformer Pitch</title>
+<style>
+body{font-family:Inter,Arial,sans-serif;margin:24px;color:#111} h1{font-size:28px} h2{font-size:20px;margin-top:24px} table{border-collapse:collapse;width:100%;margin-top:8px} th,td{border:1px solid #ddd;padding:8px;text-align:left} th{background:#f5f5f5} .bar{height:16px;background:#3b82f6} .bar2{height:16px;background:#ef4444} .grid{display:grid;grid-template-columns:1fr 1fr;gap:20px} .note{color:#555;font-size:12px}
+</style></head><body>
+<h1>Unified μ-Resonance Cognitive Mesh vs Transformer-like Token System</h1>
+<p class='note'>CPU-first resonance engine compared to a token system with ~50k vocab and 768-d embeddings. Figures generated directly from the project benchmarks.</p>
+<h2>Memory Footprint</h2>
+<table><thead><tr><th>Scenario</th><th>URCM (MB)</th><th>Transformer (MB)</th><th>Efficiency (×)</th><th>Bars</th></tr></thead><tbody>
+<tr>
+<td>Short</td><td>0.00</td><td>146.52</td><td>41657.75</td>
+<td><div style='display:flex;gap:8px;align-items:center'>
+<div class='bar' style='width:0.0%'></div>
+<div class='bar2' style='width:99.6%'></div>
+</div></td></tr>
+<tr>
+<td>Medium</td><td>0.01</td><td>146.65</td><td>18753.44</td>
+<td><div style='display:flex;gap:8px;align-items:center'>
+<div class='bar' style='width:0.0%'></div>
+<div class='bar2' style='width:99.7%'></div>
+</div></td></tr>
+<tr>
+<td>Long</td><td>0.02</td><td>147.13</td><td>6443.45</td>
+<td><div style='display:flex;gap:8px;align-items:center'>
+<div class='bar' style='width:0.0%'></div>
+<div class='bar2' style='width:100.0%'></div>
+</div></td></tr>
+</tbody></table>
+<h2>Processing Speed</h2>
+<table><thead><tr><th>Phonemes</th><th>Cached (ms)</th><th>Uncached (ms)</th><th>Speedup (×)</th><th>Bars</th></tr></thead><tbody>
+<tr>
+<td>10</td><td>1.01</td><td>3.77</td><td>3.73</td>
+<td><div style='display:flex;gap:8px;align-items:center'>
+<div class='bar' style='width:87.4%'></div>
+<div class='bar2' style='width:3.1%'></div>
+</div></td></tr>
+<tr>
+<td>50</td><td>1.07</td><td>39.47</td><td>36.95</td>
+<td><div style='display:flex;gap:8px;align-items:center'>
+<div class='bar' style='width:92.3%'></div>
+<div class='bar2' style='width:32.9%'></div>
+</div></td></tr>
+<tr>
+<td>100</td><td>1.07</td><td>51.65</td><td>48.21</td>
+<td><div style='display:flex;gap:8px;align-items:center'>
+<div class='bar' style='width:92.6%'></div>
+<div class='bar2' style='width:43.1%'></div>
+</div></td></tr>
+<tr>
+<td>200</td><td>1.16</td><td>119.96</td><td>103.71</td>
+<td><div style='display:flex;gap:8px;align-items:center'>
+<div class='bar' style='width:100.0%'></div>
+<div class='bar2' style='width:100.0%'></div>
+</div></td></tr>
+</tbody></table>
+<h2>Key Takeaways</h2>
+<ul>
+<li>Fixed small phoneme set avoids large vocab tables.</li>
+<li>Compression achieves ≥2× on average with float32 latent vectors.</li>
+<li>Caching yields strong speedups on repeated phoneme access.</li>
+<li>Transformer memory scales with vocab and sequence embeddings.</li>
+</ul>
+<p class='note'>Open locally or share this file as part of your pitch.</p>
+</body></html>

@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="360">
+  <style>
+    .box{fill:#f9fafb;stroke:#111;stroke-width:1}
+    .label{font-family:Arial;font-size:12px;fill:#111}
+    .title{font-family:Arial;font-size:14px;fill:#111}
+  </style>
+  <text x="20" y="24" class="title">Fig 7 — Working Memory Intent Stack</text>
+  <rect x="200" y="80" width="240" height="50" class="box"/><text x="210" y="110" class="label">Intent 3</text>
+  <rect x="200" y="150" width="240" height="50" class="box"/><text x="210" y="180" class="label">Intent 2</text>
+  <rect x="200" y="220" width="240" height="50" class="box"/><text x="210" y="250" class="label">Intent 1</text>
+</svg>

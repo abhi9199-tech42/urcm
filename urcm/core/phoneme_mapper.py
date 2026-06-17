@@ -49,6 +49,8 @@ class PhonemeFrequencyMapper:
         'x', 'z', 'f', 'w'  # For non-Sanskrit languages
     }
     
+    _VEC_CACHE: Dict[int, Dict[str, np.ndarray]] = {}
+    _FEAT_CACHE: Dict[int, Dict[str, np.ndarray]] = {}
     def __init__(self, frequency_dim: int = 24, smoothness_weight: float = 0.1):
         """
         Initialize the phoneme-frequency mapper.
@@ -65,10 +67,17 @@ class PhonemeFrequencyMapper:
         self.smoothness_weight = smoothness_weight
         
         # Initialize phoneme-to-frequency mapping
-        self._initialize_phoneme_vectors()
+        if frequency_dim in self._VEC_CACHE and frequency_dim in self._FEAT_CACHE:
+            self.phoneme_vectors = self._VEC_CACHE[frequency_dim]
+            self.articulatory_features = self._FEAT_CACHE[frequency_dim]
+        else:
+            self._initialize_phoneme_vectors()
+            self._initialize_articulatory_features()
+            self._VEC_CACHE[frequency_dim] = self.phoneme_vectors
+            self._FEAT_CACHE[frequency_dim] = self.articulatory_features
         
         # Articulatory feature matrix for smoothness constraints
-        self._initialize_articulatory_features()
+        pass
     
     def _initialize_phoneme_vectors(self):
         """Initialize deterministic phoneme-to-frequency vector mappings."""
@@ -244,23 +253,20 @@ class PhonemeFrequencyMapper:
         smoothed_path = path.copy()
         
         # Apply iterative smoothing
-        for iteration in range(3):  # Limited iterations to prevent over-smoothing
-            for i in range(1, len(smoothed_path) - 1):
-                # Calculate smoothing adjustment based on neighbors
-                prev_vec = smoothed_path[i - 1]
-                curr_vec = smoothed_path[i]
-                next_vec = smoothed_path[i + 1]
-                
-                # Smoothing: move current vector towards average of neighbors
-                neighbor_avg = (prev_vec + next_vec) / 2
-                adjustment = (neighbor_avg - curr_vec) * self.smoothness_weight
-                
-                # Apply adjustment while preserving vector magnitude
-                new_vec = curr_vec + adjustment
-                # Normalize to maintain consistent magnitude
-                new_vec = new_vec / np.linalg.norm(new_vec) * np.linalg.norm(curr_vec)
-                
-                smoothed_path[i] = new_vec
+        iterations = 1
+        base_norms = np.linalg.norm(path, axis=1)
+        for iteration in range(iterations):  # Limited iterations to prevent over-smoothing
+            inner = smoothed_path[1:-1]
+            prevs = smoothed_path[:-2]
+            nexts = smoothed_path[2:]
+            neighbor_avg = (prevs + nexts) / 2.0
+            adjustments = (neighbor_avg - inner) * self.smoothness_weight
+            new_inner = inner + adjustments
+            norms = np.linalg.norm(new_inner, axis=1)
+            # Avoid division by zero
+            norms[norms == 0] = 1.0
+            scaled = (new_inner / norms[:, None]) * base_norms[1:-1][:, None]
+            smoothed_path[1:-1] = scaled
         
         return smoothed_path
     
@@ -319,56 +325,83 @@ class TextToPhonemeConverter:
     """
     Converts text input to phoneme sequences for frequency mapping.
     
-    This is a simplified converter that handles basic text-to-phoneme conversion
-    for demonstration purposes. In a production system, this would use more
-    sophisticated phonetic analysis.
+    Supports both English (approximate) and Sanskrit (IAST) inputs.
     """
     
     def __init__(self):
         """Initialize the text-to-phoneme converter."""
-        # Simple mapping for common English letters to approximate Sanskrit phonemes
-        self.letter_to_phoneme = {
-            'a': 'a', 'e': 'e', 'i': 'i', 'o': 'o', 'u': 'u',
-            'b': 'b', 'c': 'k', 'd': 'd', 'f': 'f', 'g': 'g',
-            'h': 'h', 'j': 'j', 'k': 'k', 'l': 'l', 'm': 'm',
-            'n': 'n', 'p': 'p', 'r': 'r', 's': 's', 't': 't',
-            'v': 'v', 'w': 'w', 'x': 'x', 'y': 'y', 'z': 'z'
+        # English -> Approximate Sanskrit Phoneme Map
+        self.english_map = {
+            'a': 'a', 'b': 'b', 'c': 'k', 'd': 'd', 'e': 'e', 'f': 'f',
+            'g': 'g', 'h': 'h', 'i': 'i', 'j': 'j', 'k': 'k', 'l': 'l',
+            'm': 'm', 'n': 'n', 'o': 'o', 'p': 'p', 'q': 'k', 'r': 'r',
+            's': 's', 't': 't', 'u': 'u', 'v': 'v', 'w': 'v', 'x': 'x',
+            'y': 'y', 'z': 'z'
         }
-    
+        
+        # Sanskrit IAST Direct Map (Identity for known phonemes)
+        # We also handle some common transliteration variants
+        self.sanskrit_map = {
+            'ā': 'ā', 'ī': 'ī', 'ū': 'ū', 
+            'ṛ': 'ṛ', 'ṝ': 'ṝ', 'ḷ': 'ḷ', 'ḹ': 'ḹ',
+            'ai': 'ai', 'au': 'au',
+            'ṅ': 'ṅ', 'ñ': 'ñ', 'ṇ': 'ṇ', 
+            'ṭ': 'ṭ', 'ṭh': 'ṭh', 'ḍ': 'ḍ', 'ḍh': 'ḍh',
+            'ś': 'ś', 'ṣ': 'ṣ', 'ḥ': 'h', 'ṃ': 'm' 
+        }
+
     def convert_text_to_phonemes(self, text: str, language_hint: Optional[str] = None) -> PhonemeSequence:
         """
         Convert text to phoneme sequence.
         
-        Args:
-            text: Input text to convert
-            language_hint: Optional language hint for better conversion
-            
-        Returns:
-            PhonemeSequence object
+        Detects if input contains IAST characters to switch to Sanskrit mode.
         """
         if not text or not text.strip():
             raise ValueError("Input text cannot be empty")
         
-        # Simple conversion: normalize and map characters
-        normalized_text = text.lower().strip()
+        text = text.strip().lower()
         phonemes = []
         
-        for char in normalized_text:
-            if char.isalpha() and char in self.letter_to_phoneme:
-                phonemes.append(self.letter_to_phoneme[char])
-            elif char == ' ':
-                # Add a brief pause phoneme for spaces (using 'a' as neutral)
-                if phonemes and phonemes[-1] != 'a':
-                    phonemes.append('a')
+        # 1. Tokenize (Simple greedy match for multi-char phonemes like 'ai', 'au', 'kh', 'gh'...)
+        # We need to process from left to right, matching longest phonemes first.
+        # This is crucial for aspirated consonants (kh, gh) vs k+h.
         
+        i = 0
+        while i < len(text):
+            # Try 2-char match first
+            if i + 1 < len(text):
+                chunk = text[i:i+2]
+                if chunk in ['ai', 'au', 'kh', 'gh', 'ch', 'jh', 'th', 'dh', 'ph', 'bh']:
+                    # Check if valid Sanskrit phoneme (simplified check)
+                    # We map these digraphs directly
+                    phonemes.append(chunk)
+                    i += 2
+                    continue
+            
+            # Single char match
+            char = text[i]
+            
+            # Check Sanskrit specific
+            if char in self.sanskrit_map:
+                phonemes.append(self.sanskrit_map[char])
+            # Check English/Standard
+            elif char in self.english_map:
+                phonemes.append(self.english_map[char])
+            # Handle space/punctuation
+            elif char in [' ', ',', '.', '-']:
+                 if phonemes and phonemes[-1] != 'a':
+                     # Optional: Add silence/neutral vowel
+                     pass 
+            
+            i += 1
+            
         if not phonemes:
-            # Fallback to single neutral phoneme
             phonemes = ['a']
         
         return PhonemeSequence(
             phonemes=phonemes,
             source_text=text,
-            language_hint=language_hint
+            language_hint="sanskrit" if any(c in self.sanskrit_map for c in text) else "english"
         )
 
 

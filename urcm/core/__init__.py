@@ -28,6 +28,10 @@ from .performance import (
 
 from .system import URCMSystem
 
+from .resonance_encoder import ResonancePathEncoder
+from .hierarchical_encoder import HierarchicalEncoder
+from .memory import GeometricMemory
+
 __all__ = [
     "PhonemeSequence",
     "FrequencyPath",
@@ -45,5 +49,8 @@ __all__ = [
     "CompressionMonitor",
     "PerformanceBenchmark",
     "PerformanceMetrics",
-    "URCMSystem"
+    "URCMSystem",
+    "ResonancePathEncoder",
+    "HierarchicalEncoder",
+    "GeometricMemory"
 ]

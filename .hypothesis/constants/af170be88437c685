@@ -1,0 +1,4 @@
+# file: C:\Users\kriti\OneDrive\Unified μ-Resonance Cognitive Mesh (URCM)\urcm\ops\metrics_exporter.py
+# hypothesis_version: 6.148.8
+
+[0.0, 200, 401, 404, 500, '/health', '/metrics', '0.4', '0.5', '127.0.0.1', '8008', 'Authorization', 'Bearer ', 'Content-Length', 'Content-Type', 'URCM_METRICS_BIND', 'URCM_METRICS_PORT', 'URCM_METRICS_TOKEN', '__main__', 'application/json', 'completions', 'converged', 'converged_total', 'dead end', 'dead_end', 'dead_end_total', 'delta_mu', 'env', 'event', 'final_mu', 'last_delta_mu', 'last_final_mu', 'logs', 'max steps', 'max_steps', 'max_steps_rate', 'max_steps_total', 'metrics.jsonl', 'min_final_mu', 'mu_path_complete', 'mu_step', 'mu_step_total', 'ok', 'oscillation_total', 'process_end', 'process_total', 'r', 'reason', 'reason_counts', 'thresholds', 'token', 'totals', 'utf-8']

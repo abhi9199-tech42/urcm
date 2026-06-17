@@ -1,0 +1,4 @@
+# file: C:\Users\kriti\OneDrive\Unified μ-Resonance Cognitive Mesh (URCM)\urcm\core\observability.py
+# hypothesis_version: 6.148.8
+
+[100, 512, 5000000, '...(truncated)', '5', '5000000', 'URCM_ENV', 'URCM_LOG_BACKUPS', 'URCM_LOG_MAX_BYTES', 'URCM_RUN_ID', '[REDACTED]', '[REDACTED_ARRAY]', '[REDACTED_BYTES]', '[UNSERIALIZABLE]', 'a', 'dtype', 'embedding', 'env', 'event', 'latent', 'logs', 'metrics.jsonl', 'phoneme', 'resonance', 'run_id', 'shape', 'text_raw', 'ts', 'utf-8', 'vector']

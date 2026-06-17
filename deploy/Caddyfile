@@ -1,0 +1,17 @@
+:443, urcm.example.com {
+    tls /etc/caddy/certs/fullchain.pem /etc/caddy/certs/privkey.pem
+
+    @metrics {
+        path /metrics*
+    }
+    handle @metrics {
+        reverse_proxy urcm_exporter:8008
+    }
+
+    @health {
+        path /health*
+    }
+    handle @health {
+        reverse_proxy urcm_exporter:8008
+    }
+}

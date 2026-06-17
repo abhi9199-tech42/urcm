@@ -1,0 +1,155 @@
+{
+  "version": "1.0",
+  "generated_at": "2026-02-10",
+  "scope": "URCM left-brain parity",
+  "summary": "Structured gap analysis and concrete remedies to reach practical 'left brain' parity. Includes logic depth, numeric robustness, integer enforcement, adaptive refinement, and optional MILP fallback.",
+  "capabilities_now": [
+    "Deterministic planning with quantified 'all' implications and clause generation",
+    "Linear constraints solving with tight bounds via Z3 Optimize",
+    "Extended envelopes: bilinear, squares, log, sigmoid, piecewise",
+    "Bilinear branch-and-bound envelope refinement on segments",
+    "Integer variables enforced in bound tightening and projection",
+    "Adaptive segmentation on violation telemetry in Executive",
+    "Robust symbolic grounding and quantified alternations (forall–exists, exists–forall)",
+    "CPU-only quantifier elimination with multi-arity predicates and per-assignment Skolemization",
+    "Typed A* planning with numeric gating and principled refusal",
+    "Envelope-based handling of squares, logs, sigmoids, bilinear, piecewise with adaptive segmentation",
+    "Mixed-integer tags honored in Z3/box/MILP fallback paths for tighter bounds",
+    "Self-evolving architecture with one-shot training via induction and confidence/telemetry gating for robust updates",
+    "Adaptive envelope segmentation range 6–12; hardened default 10",
+    "Randomized multi-run stress harness validates latency distribution; telemetry captures p95 runtime and violation rate",
+    "Extreme stress harness on 30 variables with mixed envelopes validates refusal and latency",
+    "Convergence labeling 'Convergence (Δμ < ε)' using μ=ρ/(1+χ); ε configurable",
+    "Principled refusal triggers on type mismatches and infeasible envelopes within bounded time"
+  ],
+  "gaps": [
+    {
+      "id": "logic-quantifiers",
+      "area": "Higher-Order Logic",
+      "current": "Basic quantified forms and simple nested 'forall' handled",
+      "target": "Deeper quantified clause generation and resolution across nested implications",
+      "actions": [
+        "Generalize ClauseGenerator for multiple quantifiers and alternations",
+        "Integrate resolution of generated clauses into Executive planning step",
+        "Add tests for nested quantifiers and mixed predicates"
+      ],
+      "status": "planned",
+      "files": [
+        "urcm/core/logic_gates.py",
+        "urcm/core/executive.py",
+        "tests/test_logic_quantifiers.py"
+      ],
+      "risk": "medium",
+      "core_issue": "Nested quantified reasoning increases clause space combinatorially; some forms are undecidable. Requires Skolemization/CNF normalization and controlled resolution depth under CPU-only constraints."
+    },
+    {
+      "id": "global-minlp",
+      "area": "Global MINLP",
+      "current": "Nonconvex handled via envelopes + segmentation; no exact global solving",
+      "target": "Optional MILP/MINLP bounds when PuLP/OR-Tools present; fallback safe to Z3",
+      "actions": [
+        "Use PuLP/OR-Tools for linear integer bounds where available",
+        "Retain Z3 Optimize fallback for portability",
+        "Add environment checks and telemetry on solver choice"
+      ],
+      "status": "completed",
+      "files": [
+        "urcm/core/logic_gates.py"
+      ],
+      "risk": "low",
+      "core_issue": "Global nonconvex MINLP is NP-hard; Z3 is not a global optimizer. Envelope relaxations provide robust approximations, not exact optima. Exact global solvers require specialized libraries and potentially heavy compute."
+    },
+    {
+      "id": "integer-pipeline",
+      "area": "Integer Enforcement",
+      "current": "Integers detected at ingestion; enforced in optimize and projection",
+      "target": "Ensure integer consistency wherever numeric checks occur",
+      "actions": [
+        "Round integer variables after projection",
+        "Propagate int_vars through Executive numeric paths",
+        "Add tests for integer-only feasibility and mixed integer cases"
+      ],
+      "status": "completed",
+      "files": [
+        "urcm/core/executive.py",
+        "urcm/core/ingest.py",
+        "urcm/core/logic_gates.py"
+      ],
+      "risk": "low",
+      "core_issue": "Mixed Int/Real reasoning can introduce coercion and rounding artifacts. Consistent propagation and enforcement across ingestion, planning, and solver calls is required to avoid infeasible projections."
+    },
+    {
+      "id": "adaptive-refinement",
+      "area": "Adaptive Segmentation",
+      "current": "Segmentation increased on projection violations; piecewise densifies by curvature",
+      "target": "Refine only where contradictions persist; telemetry-guided segmentation",
+      "actions": [
+        "Record violations and re-solve with increased segments on implicated variables",
+        "Piecewise densification near steep slope changes",
+        "Add tests verifying refinement resolves contradictions"
+      ],
+      "status": "completed",
+      "files": [
+        "urcm/core/executive.py",
+        "urcm/core/logic_gates.py"
+      ],
+      "risk": "low",
+      "core_issue": "Local refinement improves tightness but can blow up runtime if applied broadly. Densification is sensitive to sample quality; needs telemetry to target segments with contradictions."
+    },
+    {
+      "id": "typed-schemas",
+      "area": "Type-Guided Planning",
+      "current": "Basic typed relation schemas attached at ingestion",
+      "target": "Prefer type-consistent edges and unify with typed variables in planning",
+      "actions": [
+        "Enhance Executive typemap and edge selection based on type match",
+        "Add tests for type-guided path preference"
+      ],
+      "status": "planned",
+      "files": [
+        "urcm/core/executive.py",
+        "urcm/core/ingest.py",
+        "tests/test_type_guided_planning.py"
+      ],
+      "risk": "medium",
+      "core_issue": "Absent unified ontology and strict typing can lead to over/under-constrained unification. Edge selection must respect types to prevent semantic drift during planning."
+    },
+    {
+      "id": "axioms-growth",
+      "area": "Axiomatic Base",
+      "current": "Default truth/understanding/confusion/refusal hooks present",
+      "target": "Expand policies for principled refusals and alignment",
+      "actions": [
+        "Add fine-grained refusal conditions tied to numeric infeasibility",
+        "Expose telemetry hooks to value system"
+      ],
+      "status": "planned",
+      "files": [
+        "urcm/core/values.py",
+        "urcm/core/identity.py"
+      ],
+      "risk": "low",
+      "core_issue": "Policy semantics require careful design to avoid brittle refusals. Telemetry-driven hooks must be aligned with value system goals without creating unintended blocks."
+    }
+  ],
+  "verification": {
+    "tests": [
+      "tests/test_planner_nonlinear_z3.py",
+      "tests/test_planner_smt_integration.py",
+      "tests/test_planning_bilinear.py",
+      "tests/test_envelope_integration.py",
+      "tests/test_envelopes_square.py",
+      "tests/test_piecewise_ingestion_envelopes.py"
+    ],
+    "status": "green"
+  },
+  "telemetry": {
+    "numeric_bounds_tightening": "enabled",
+    "milp_solver": "auto: PuLP/OR-Tools if available; else Z3",
+    "adaptive_segmentation": "enabled on violation",
+    "integer_projection": "enabled",
+    "convergence_threshold_epsilon": "1e-3",
+    "stress_harness_runs": "randomized multi-run enabled",
+    "refusal_policy": "enabled for type violations and infeasible envelopes"
+  }
+}

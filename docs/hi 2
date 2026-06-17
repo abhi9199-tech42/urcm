@@ -1,0 +1,70 @@
+URCM vs Transformer — Full Detail (Plain Text)
+
+Executive Summary
+- URCM uses compact phoneme mapping and μ-convergence telemetry; avoids large embedding tables.
+- Transformer systems store large vocabularies and per-token embeddings; memory scales with sequence length.
+- Benchmarks indicate ~6,400×–41,600× memory efficiency and strong cached speedups on CPU.
+
+Architecture
+- Transformer
+  - Representation: discrete tokens; large vocab; next-token prediction
+  - Reasoning: learned attention; inference cost grows with sequence length
+  - Memory: embedding table O(V×d) + sequence embeddings
+  - Determinism: often stochastic; telemetry indirect
+- URCM
+  - Representation: continuous frequency vectors; compact phoneme set
+  - Reasoning: quantifier elimination, typed A*, envelope-based numeric feasibility
+  - Memory: small mapping + generated frequency vectors + compact latent state
+  - Determinism: deterministic generation; explicit μ/ρ/χ telemetry and principled refusals
+
+Benchmarks — Memory Footprint (Source: URCM_BENCHMARK_MEMORY.csv)
+Scenario: Short
+  URCM_MB: 0.003517
+  Transformer_MB: 146.516602
+  Efficiency_X: 41657.752711
+  Bar: URCM [.] Transformer [####################]
+Scenario: Medium
+  URCM_MB: 0.007820
+  Transformer_MB: 146.654297
+  Efficiency_X: 18753.436098
+  Bar: URCM [.] Transformer [####################]
+Scenario: Long
+  URCM_MB: 0.022835
+  Transformer_MB: 147.134766
+  Efficiency_X: 6443.450718
+  Bar: URCM [..] Transformer [####################]
+Interpretation: URCM memory remains near-zero due to compact representation; transformer is dominated by the embedding table.
+
+Benchmarks — Processing Speed (Source: URCM_BENCHMARK_SPEED.csv)
+Phonemes: 10
+  Cached_ms: 1.011200
+  Uncached_ms: 3.768100
+  Speedup_X: 3.726365
+  Bar: Cached [#####.....] Uncached [############....]
+Phonemes: 50
+  Cached_ms: 1.068000
+  Uncached_ms: 39.466700
+  Speedup_X: 36.953839
+  Bar: Cached [#####.....] Uncached [####################]
+Phonemes: 100
+  Cached_ms: 1.071300
+  Uncached_ms: 51.646100
+  Speedup_X: 48.208812
+  Bar: Cached [#####.....] Uncached [####################]
+Phonemes: 200
+  Cached_ms: 1.156700
+  Uncached_ms: 119.956000
+  Speedup_X: 103.705369
+  Bar: Cached [######....] Uncached [####################]
+Interpretation: Cache yields strong speedups on repeated phoneme access; uncached reflects generation cost.
+
+Numeric Robustness and Refusal Policy
+- Extended envelopes: bilinear, square, chain, log, sigmoid, piecewise; hardened segments (default 10; adaptive 6–12)
+- Integer variables enforced across optimize and projection
+- Principled refusals on type mismatches and numeric infeasibility; counterexample telemetry exposed
+- Convergence labeling: “Convergence (Δμ < ε)” with configurable ε; μ = ρ/(1+χ)
+
+Links
+- URCM_vs_Transformer_Pitch.html — visual pitch with bars
+- URCM_BENCHMARK_MEMORY.csv and URCM_BENCHMARK_SPEED.csv — raw benchmark data
+- URCM_TRANSFORMER_VS_URCM.md — detailed comparison document
