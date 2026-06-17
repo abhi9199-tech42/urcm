@@ -125,7 +125,7 @@ def diagnose():
     print(f"Error (Using Snapped Input): {err_snapped:.20f}")
     
     if err_snapped < 1e-5:
-        print("🚀 HOLY GRAIL ACHIEVED: Perfect Reversibility confirmed via Snapping + Math.")
+        print("✅ Reversibility confirmed via Snapping + Math.")
     else:
         print("⚠️ Still failing even with perfect input? Check W_res_inv.")
 

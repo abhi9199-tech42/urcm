@@ -6,7 +6,7 @@ Unified μ-Resonance Cognitive Mesh (URCM) is a value-grounded, local-first AI a
 
 **Competitive Advantages Over ChatGPT/Local Models:**
 - 100% local & private (no cloud dependency)
-- Deterministic reasoning (μ-stability guarantees reproducible outputs)
+- Deterministic reasoning (μ-stability for reproducible outputs)
 - Value-grounded intelligence (built-in ethics, not fine-tuned)
 - Memory efficient (<45MB footprint vs GB-scale models)
 - O(1) attractor lookup vs O(N) token generation
@@ -168,7 +168,7 @@ Unified μ-Resonance Cognitive Mesh (URCM) is a value-grounded, local-first AI a
 | Feature | ChatGPT | URCM | Advantage |
 |---------|---------|------|-----------|
 | **Privacy** | Data sent to cloud | 100% local | URCM ✓ |
-| **Determinism** | Non-deterministic | μ-stability guarantees | URCM ✓ |
+| **Determinism** | Non-deterministic | μ-stability enabled | URCM ✓ |
 | **Cost** | $20+/month API | One-time hardware | URCM ✓ |
 | **Latency** | Network dependent | Local O(1) lookup | URCM ✓ |
 | **Ethics** | Fine-tuned, adjustable | Built-in axioms | URCM ✓ |

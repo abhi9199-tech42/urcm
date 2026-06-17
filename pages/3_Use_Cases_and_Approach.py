@@ -51,7 +51,7 @@ with col1:
     Why switch from pure Transformer architectures?
     
     *   **Cost Efficiency:** O(1) attractor lookup replaces expensive O(N) token generation, reducing inference costs by up to 90%.
-    *   **Determinism:** High $\mu$ states guarantee semantic stability, critical for regulated industries (Finance, Healthcare).
+    *   **Determinism:** High $\mu$ states indicate semantic stability, relevant for regulated industries (Finance, Healthcare).
     *   **Latency:** Converging to a meaning happens in milliseconds, enabling true real-time cognitive loops.
     *   **Memory Footprint:** Semantic compression allows running complex reasoning chains on edge devices.
     """)

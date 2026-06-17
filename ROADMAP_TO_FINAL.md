@@ -35,7 +35,7 @@ These are the specific mathematical properties that distinguish the current Prot
 
 ### 4. Formal Convergence
 *   **Prototype:** We mention Lyapunov stability.
-*   **Final Goal:** **Mathematical Proof**. Demonstrate that $\Delta E \rightarrow 0$ over time, guaranteeing that the system will always reach a conclusion.
+*   **Final Goal:** **Mathematical Proof**. Demonstrate that $\Delta E \rightarrow 0$ over time, ensuring reliable convergence.
 
 ---
 

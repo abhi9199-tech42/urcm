@@ -105,7 +105,7 @@ def benchmark_performance():
     
     print("\nOVERALL STATUS")
     if throughput > 100:
-        print("🚀 SYSTEM IS HIGH-PERFORMANCE.")
+        print("📊 Performance benchmarks completed.")
     else:
         print("🐢 SYSTEM NEEDS OPTIMIZATION.")
 

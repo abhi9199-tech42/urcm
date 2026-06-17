@@ -20,7 +20,7 @@ Based on the [Technical Roadmap](ROADMAP_TO_FINAL.md), this document details the
 ---
 
 ## ⚖️ Phase 2: The Invariants (Physics of Mind)
-**Objective:** Implement the mathematical laws that guarantee intelligence.
+**Objective:** Implement mathematical laws for stable reasoning.
 
 ### Requirements
 *   **REQ-2.1 (Canonical Energy):** Define a global scalar Energy function $E(s)$ that is minimized for meaningful states.

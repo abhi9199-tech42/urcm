@@ -100,10 +100,10 @@ def benchmark_vs_chatgpt():
     print("-" * 66)
     print("\n🏆 CONCLUSION:")
     if avg_axiom_lat < 10.0:
-        print("AXIOM provides a viable, FREE, and PRIVATE alternative for basic reasoning tasks.")
-        print("While ChatGPT is faster and smarter, AXIOM wins on Sovereignty and Cost.")
+        print("AXIOM provides a local, private alternative for basic reasoning tasks.")
+        print("While ChatGPT is faster and broader, AXIOM runs locally and costs less.")
     else:
-        print("AXIOM is significantly slower but guarantees total privacy.")
+        print("AXIOM is significantly slower but keeps all processing local.")
 
 if __name__ == "__main__":
     benchmark_vs_chatgpt()
