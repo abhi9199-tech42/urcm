@@ -1,6 +1,6 @@
-import pickle
 import numpy as np
 import os
+from urcm.core.safe_serialization import safe_load
 
 BRAIN_PATH = "urcm_identity.pkl"
 
@@ -11,8 +11,10 @@ def analyze():
 
     print(f"📊 Analyzing {BRAIN_PATH}...")
     try:
-        with open(BRAIN_PATH, "rb") as f:
-            data = pickle.load(f)
+        data = safe_load(BRAIN_PATH)
+        if data is None:
+            print(f"❌ Failed to load {BRAIN_PATH}")
+            return
             
         W = data["l2_W_res"]
         print(f"   Shape: {W.shape}")

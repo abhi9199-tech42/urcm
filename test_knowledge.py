@@ -1,14 +1,16 @@
 import numpy as np
-import pickle
 import sys
+from urcm.core.safe_serialization import safe_load
 from urcm.core.hierarchical_encoder import HierarchicalEncoder
 
 def main():
     print("TESTING KNOWLEDGE RECALL & GENERATION")
     
     # Load Brain
-    with open("urcm_identity.pkl", "rb") as f:
-        brain = pickle.load(f)
+    brain = safe_load("urcm_identity.pkl")
+    if brain is None:
+        print("❌ Failed to load brain.")
+        return
         
     concept_map = brain["concept_map"]
     # Reverse map for decoding

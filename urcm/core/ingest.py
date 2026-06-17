@@ -28,7 +28,8 @@ class KnowledgeIngestion:
         if os.path.exists(brain_path):
             print(f"Loading brain from {brain_path}...")
             with open(brain_path, "rb") as f:
-                self.brain_data = pickle.load(f)
+                from urcm.core.safe_serialization import safe_load
+                self.brain_data = safe_load(f.name)
                 # Check dim
                 if self.brain_data["l2_W_res"].shape[0] != l2_dim:
                     print(f"⚠️ Resizing Brain from {self.brain_data['l2_W_res'].shape[0]} to {l2_dim}")

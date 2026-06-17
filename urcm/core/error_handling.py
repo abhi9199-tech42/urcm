@@ -1,6 +1,9 @@
 
+import logging
 import numpy as np
 from typing import List, Dict, Tuple, Optional
+
+logger = logging.getLogger(__name__)
 from dataclasses import replace
 
 from urcm.core.data_models import ResonanceState
@@ -126,7 +129,8 @@ class ErrorRecoverySystem:
                  neutral_vec = resized_vec
                  
              return replace(state, resonance_vector=neutral_vec, stability_score=0.5, mu_value=0.1)
-        except:
+        except Exception as e:
+             logger.error(f"Collapse recovery failed: {e}")
              return None
 
     def _project_to_phoneme_region(self, state: ResonanceState) -> ResonanceState:

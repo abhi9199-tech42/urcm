@@ -166,14 +166,14 @@ if __name__ == "__main__":
         try:
             idx = args.index("--goal")
             goal = args[idx+1]
-        except:
+        except (ValueError, IndexError):
             pass
             
     if "--start" in args:
         try:
             idx = args.index("--start")
             start = args[idx+1]
-        except:
+        except (ValueError, IndexError):
             pass
     
     run_left_brain_loop(start_topic=start, goal_topic=goal, duration_minutes=duration)

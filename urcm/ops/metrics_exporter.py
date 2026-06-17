@@ -111,15 +111,10 @@ class Handler(BaseHTTPRequestHandler):
         tok = os.environ.get("URCM_METRICS_TOKEN")
         if not tok:
             return True
-        qtok = None
-        if "token" in qs and qs["token"]:
-            qtok = qs["token"][0]
         ah = self.headers.get("Authorization", "")
         if ah.startswith("Bearer "):
             if ah[len("Bearer "):] == tok:
                 return True
-        if qtok and qtok == tok:
-            return True
         return False
 
     def do_GET(self):

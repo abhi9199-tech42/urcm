@@ -1,8 +1,8 @@
 import numpy as np
-import pickle
 import os
 import sys
 from typing import Tuple
+from urcm.core.safe_serialization import safe_load
 
 from urcm.core.hierarchical_encoder import HierarchicalEncoder
 from urcm.core.phoneme_mapper import TextToPhonemeConverter
@@ -43,8 +43,7 @@ def main():
     
     # 1. Load the Trained Brain
     try:
-        with open("urcm_identity.pkl", "rb") as f:
-            brain_data = pickle.load(f)
+        brain_data = safe_load("urcm_identity.pkl")
     except FileNotFoundError:
         print("❌ Brain file not found. Please run 'train_identity.py' first.")
         return

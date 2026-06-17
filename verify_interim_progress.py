@@ -1,8 +1,8 @@
-import pickle
 import time
 import numpy as np
 import sys
 import os
+from urcm.core.safe_serialization import safe_load
 
 # Add project root to path
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
@@ -26,8 +26,7 @@ def verify_interim_progress():
     
     for i in range(max_retries):
         try:
-            with open(BRAIN_PATH, "rb") as f:
-                brain_data = pickle.load(f)
+            brain_data = safe_load(BRAIN_PATH)
             print(f"✅ Successfully loaded '{BRAIN_PATH}'")
             break
         except PermissionError:

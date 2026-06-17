@@ -1,4 +1,4 @@
-import pickle
+from urcm.core.safe_serialization import safe_load
 import os
 
 def check_brain():
@@ -7,8 +7,10 @@ def check_brain():
         print("Brain not found!")
         return
         
-    with open(brain_path, "rb") as f:
-        data = pickle.load(f)
+    data = safe_load(brain_path)
+    if data is None:
+        print("Brain not found or failed to load!")
+        return
         
     vocab = list(data["concept_map"].keys())
     print(f"Vocab Size: {len(vocab)}")

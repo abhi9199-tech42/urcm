@@ -1,3 +1,4 @@
+import os
 import numpy as np
 import warnings
 from typing import Any, List, Optional, Tuple
@@ -16,6 +17,7 @@ class SafetyGovernor:
         self.energy_ceiling = energy_ceiling
         self.max_spectral_radius = max_spectral_radius
         self._kernel_locked = False
+        self._admin_key = os.environ.get("URCM_ADMIN_KEY", "")
         
     def lock_kernel(self):
         """Activates the Self-Modification Lock."""
@@ -23,7 +25,9 @@ class SafetyGovernor:
         
     def unlock_kernel(self, key: str):
         """Unlocks kernel for authorized updates (e.g., loading weights)."""
-        if key == "URCM_ADMIN_OVERRIDE":
+        if not self._admin_key:
+            raise SafetyViolation("Kernel unlock requires URCM_ADMIN_KEY environment variable.")
+        if key == self._admin_key:
             self._kernel_locked = False
         else:
             raise SafetyViolation("Unauthorized attempt to unlock Kernel.")

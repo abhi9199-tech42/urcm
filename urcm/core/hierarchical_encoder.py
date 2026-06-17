@@ -11,8 +11,11 @@ This allows the system to understand "Words" as trajectories of "Phonemes",
 and eventually "Sentences" as trajectories of "Words".
 """
 
+import logging
 from typing import Dict, List, Union, Tuple
 import numpy as np
+
+logger = logging.getLogger(__name__)
 import os
 import pickle
 
@@ -67,8 +70,14 @@ class HierarchicalEncoder:
         weight_path = "urcm_weights.pkl"
         if os.path.exists(weight_path):
             try:
-                with open(weight_path, "rb") as f:
-                    weights = pickle.load(f)
+                from urcm.core.safe_serialization import safe_load
+                if not os.path.exists(weight_path):
+                    return
+                loaded = safe_load(weight_path)
+                if loaded is None:
+                    logger.warning("Failed to load weights from %s", weight_path)
+                    return
+                weights = loaded
                     
                 # Layer 1
                 if "l1_W_res" in weights: self.layer1.W_res = weights["l1_W_res"]
@@ -165,8 +174,11 @@ class HierarchicalEncoder:
             return
             
         try:
-            with open(path, "rb") as f:
-                data = pickle.load(f)
+            from urcm.core.safe_serialization import safe_load
+            data = safe_load(path)
+            if data is None:
+                print(f"⚠️ Failed to load hierarchy from {path}")
+                return
                 
             # Load Layer 1
             l1_data = data["layer1"]

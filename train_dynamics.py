@@ -1,6 +1,6 @@
 import numpy as np
-import pickle
 import os
+from urcm.core.safe_serialization import safe_load
 from urcm.core.system import URCMSystem
 
 def train_dynamics():
@@ -128,14 +128,13 @@ def train_dynamics():
     root_dir = os.path.dirname(os.path.abspath(__file__))
     weight_path = os.path.join(root_dir, "urcm_weights.pkl")
     
-    with open(weight_path, "rb") as f:
-        weights = pickle.load(f)
+    weights = safe_load(weight_path)
         
     weights["W_res"] = W_res_new
     # Update Inverse too
     try:
         weights["W_res_inv"] = np.linalg.inv(W_res_new)
-    except:
+    except np.linalg.LinAlgError:
         weights["W_res_inv"] = np.linalg.pinv(W_res_new)
         
     with open(weight_path, "wb") as f:

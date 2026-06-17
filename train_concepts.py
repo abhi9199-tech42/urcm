@@ -1,6 +1,6 @@
-import pickle
 import numpy as np
 import os
+from urcm.core.safe_serialization import safe_load
 import sys
 
 def train_concepts():
@@ -14,8 +14,10 @@ def train_concepts():
         return
         
     print(f"1. Loading Brain from {brain_path}...")
-    with open(brain_path, "rb") as f:
-        brain = pickle.load(f)
+    brain = safe_load(brain_path)
+    if brain is None:
+        print(f"❌ Failed to load {brain_path}")
+        return
         
     if "concept_map" not in brain:
         print("❌ No concept_map found in brain.")
@@ -98,8 +100,11 @@ def train_concepts():
     if os.path.exists(weight_path):
         with open(weight_path, "rb") as f:
             try:
-                weights = pickle.load(f)
-            except:
+                from urcm.core.safe_serialization import safe_load
+                loaded = safe_load(weight_path)
+                if loaded is not None:
+                    weights = loaded
+            except Exception:
                 pass
                 
     weights["l2_W_res"] = W_res

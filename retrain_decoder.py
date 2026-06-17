@@ -1,6 +1,6 @@
 import numpy as np
-import pickle
 import os
+from urcm.core.safe_serialization import safe_load
 from urcm.core.system import URCMSystem
 
 def retrain_decoder():
@@ -54,8 +54,7 @@ def retrain_decoder():
     root_dir = os.path.dirname(os.path.abspath(__file__))
     weight_path = os.path.join(root_dir, "urcm_weights.pkl")
     
-    with open(weight_path, "rb") as f:
-        weights = pickle.load(f)
+    weights = safe_load(weight_path)
         
     weights["W_out"] = W_out_new
     

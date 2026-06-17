@@ -1,6 +1,6 @@
 import numpy as np
-import pickle
 import os
+from urcm.core.safe_serialization import safe_load
 from urcm.core.system import URCMSystem
 
 def optimize_topology():
@@ -98,8 +98,10 @@ def optimize_topology():
     root_dir = os.path.dirname(os.path.abspath(__file__))
     weight_path = os.path.join(root_dir, "urcm_weights.pkl")
     
-    with open(weight_path, "rb") as f:
-        weights = pickle.load(f)
+    weights = safe_load(weight_path)
+    if weights is None:
+        print(f"Failed to load {weight_path}")
+        return
         
     weights["W_in"] = W_in
     

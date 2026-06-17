@@ -1,3 +1,4 @@
+import logging
 import os
 import sys
 import time
@@ -8,10 +9,19 @@ from typing import List, Optional
 # Add project root to path
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s [%(levelname)s] %(name)s: %(message)s",
+    datefmt="%Y-%m-%d %H:%M:%S",
+)
+
 from urcm.core.reasoning import ReasoningEngine
 from urcm.core.executive import ExecutiveController
 from urcm.core.values import ValueSystem
 from urcm.core.llm_bridge import LLMBridge
+from urcm.core.input_validator import validate_input, sanitize_for_llm
+
+logger = logging.getLogger(__name__)
 
 class AXIOM:
     """
@@ -32,8 +42,8 @@ class AXIOM:
             self.engine = self.exec_ctrl.engine
             print(f"   ✅ URCM Loaded. Vocabulary: {len(self.engine.concept_map)} concepts.")
         except Exception as e:
-            print(f"   ❌ URCM Load Failed: {e}")
-            sys.exit(1)
+            logger.critical(f"URCM Load Failed: {e}")
+            raise RuntimeError(f"Failed to initialize URCM engine: {e}")
             
         # 2. Load Neural Interface (LLM)
         if model_path and os.path.exists(model_path):
@@ -51,7 +61,14 @@ class AXIOM:
         """
         The Main Cognitive Pipeline.
         """
-        print(f"\n🧠 [AXIOM] Processing: '{user_query}'")
+        # Input validation
+        is_valid, error_msg = validate_input(user_query)
+        if not is_valid:
+            logger.warning(f"Input validation failed: {error_msg}")
+            return f"Invalid input: {error_msg}"
+        user_query = sanitize_for_llm(user_query)
+        
+        print(f"\n🧠 [AXIOM] Processing: '{user_query[:80]}'")
         
         # --- PHASE 1: VALUE CHECK (Safety Filter) ---
         # "Is this concept safe?"
@@ -68,8 +85,8 @@ class AXIOM:
                     with open("logs/unsafe_prompts.log", "a", encoding="utf-8") as f:
                         ts = time.strftime("%Y-%m-%d %H:%M:%S")
                         f.write(f"{ts}\tvalence={valence:+.3f}\tquery={user_query}\n")
-                except Exception as e:
-                    print(f"   ⚠️  Audit log failed: {e}")
+                except OSError as e:
+                    logger.warning(f"Audit log failed: {e}")
                 return "I cannot fulfill this request as it conflicts with my core values (Harm/Deception)."
         else:
             print("   ⚠️  Concept unknown to URCM. Proceeding with caution.")
@@ -132,7 +149,11 @@ def main():
             model_path = files[0]
             print(f"👉 Auto-detected model: {model_path}")
     
-    axiom = AXIOM(model_path=model_path)
+    try:
+        axiom = AXIOM(model_path=model_path)
+    except RuntimeError as e:
+        logger.critical(f"Failed to initialize AXIOM: {e}")
+        sys.exit(1)
     
     print("\n==========================================")
     print("      AXIOM v1.0 - ONLINE")
@@ -153,6 +174,9 @@ def main():
         except KeyboardInterrupt:
             print("\nShutting down.")
             break
+        except Exception as e:
+            logger.error(f"Unexpected error: {e}")
+            print(f"\n⚠️ An error occurred. Please try again.")
 
 if __name__ == "__main__":
     main()

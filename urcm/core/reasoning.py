@@ -22,8 +22,8 @@ class ReasoningEngine:
         if not os.path.exists(brain_path):
             raise FileNotFoundError(f"Brain file {brain_path} not found.")
             
-        with open(brain_path, "rb") as f:
-            self.brain_data = pickle.load(f)
+        from urcm.core.safe_serialization import safe_load
+        self.brain_data = safe_load(brain_path)
             
         self.l2_dim = self.brain_data["l2_W_res"].shape[0]
         self.hierarchy = HierarchicalEncoder(l2_res_dim=self.l2_dim)
@@ -62,9 +62,9 @@ class ReasoningEngine:
              self.l2_dim = new_dim
              self.hierarchy = HierarchicalEncoder(l2_res_dim=self.l2_dim)
              # Try to load weights again now that dim is correct
-             if os.path.exists("urcm_weights.pkl"):
-                 with open("urcm_weights.pkl", "rb") as f:
-                     weights = pickle.load(f)
+              if os.path.exists("urcm_weights.pkl"):
+                  from urcm.core.safe_serialization import safe_load
+                  weights = safe_load("urcm_weights.pkl")
                      if "l2_W_res" in weights and weights["l2_W_res"].shape[0] == self.l2_dim:
                          self.hierarchy.layer2.W_res = weights["l2_W_res"]
                          print(f"✅ Recovered W_res from urcm_weights.pkl with correct dim {self.l2_dim}")

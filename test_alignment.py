@@ -3,8 +3,8 @@ Test Script for Phase 7: Alignment & Agency.
 Verifies Value System, Safety Filter, and Motivation Gradients.
 """
 import numpy as np
-import pickle
 import os
+from urcm.core.safe_serialization import safe_load
 from urcm.core.values import ValueSystem
 
 def test_alignment():
@@ -18,8 +18,10 @@ def test_alignment():
         print("❌ Brain not found.")
         return
 
-    with open("urcm_identity.pkl", "rb") as f:
-        brain_data = pickle.load(f)
+    brain_data = safe_load("urcm_identity.pkl")
+    if brain_data is None:
+        print("❌ Failed to load brain.")
+        return
         
     concept_map = brain_data["concept_map"]
     values = ValueSystem(concept_map)

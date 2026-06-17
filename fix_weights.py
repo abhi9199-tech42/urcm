@@ -1,7 +1,6 @@
-
-import pickle
 import os
 import numpy as np
+from urcm.core.safe_serialization import safe_load
 
 def fix_weights():
     print("🔧 Inspecting and Fixing Weight Files...")
@@ -14,8 +13,9 @@ def fix_weights():
     # 1. Load existing weights if available
     if os.path.exists(weights_path):
         try:
-            with open(weights_path, "rb") as f:
-                weights = pickle.load(f)
+            loaded = safe_load(weights_path)
+            if loaded is not None:
+                weights = loaded
             print(f"📄 Current urcm_weights.pkl keys: {list(weights.keys())}")
         except Exception as e:
             print(f"❌ Error reading weights file: {e}")
@@ -25,8 +25,7 @@ def fix_weights():
     if os.path.exists(brain_path):
         print(f"🧠 Loading {brain_path}...")
         try:
-            with open(brain_path, "rb") as f:
-                brain = pickle.load(f)
+            brain = safe_load(brain_path)
             print(f"   Brain keys: {list(brain.keys())}")
             
             # Extract L2 Weights (Critical for Concepts)

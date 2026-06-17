@@ -1,9 +1,11 @@
-import pickle
 import numpy as np
+from urcm.core.safe_serialization import safe_load
 
 def inspect():
-    with open("urcm_identity.pkl", "rb") as f:
-        brain = pickle.load(f)
+    brain = safe_load("urcm_identity.pkl")
+    if brain is None:
+        print("Failed to load brain file")
+        return
         
     cmap = brain["concept_map"]
     print(f"Total Concepts: {len(cmap)}")

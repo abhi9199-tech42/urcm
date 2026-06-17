@@ -1,6 +1,6 @@
-import pickle
 import numpy as np
 import os
+from urcm.core.safe_serialization import safe_load
 import shutil
 import time
 
@@ -24,8 +24,7 @@ def smooth_brain():
             
             # 2. Try to Load immediately to verify integrity
             print(f"   Attempt {i+1}: Loading snapshot...")
-            with open(SNAPSHOT_PATH, "rb") as f:
-                data = pickle.load(f)
+            data = safe_load(SNAPSHOT_PATH)
                 
             print("   ✅ Snapshot verified.")
             break # Success
