@@ -2,7 +2,7 @@
 
 ## Executive Summary
 - URCM replaces token prediction with a CPU-first resonance engine using a compact phoneme set and μ-convergence criteria.
-- Transformer systems require large token vocabularies and embedding tables; URCM avoids this overhead and demonstrates superior memory efficiency.
+- Transformer systems require large token vocabularies and embedding tables; URCM avoids this overhead and demonstrates improved memory efficiency.
 - Benchmarks show 6,000–41,000× lower memory footprint and strong cached speedups, with deterministic behavior and telemetry-based convergence labeling.
 
 ## Scope and Assumptions

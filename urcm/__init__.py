@@ -1,7 +1,7 @@
 """
 Unified μ-Resonance Cognitive Mesh (URCM) - A frequency-based reasoning system.
 
-This package implements a revolutionary artificial reasoning system that replaces 
+This package implements a frequency-based artificial reasoning system that replaces 
 discrete token-based processing with continuous frequency-based representations.
 """
 

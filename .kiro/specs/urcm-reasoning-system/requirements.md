@@ -2,7 +2,7 @@
 
 ## Introduction
 
-The Unified μ-Resonance Cognitive Mesh (URCM) is a revolutionary artificial reasoning system that replaces discrete token-based processing with continuous frequency-based representations. The system uses phoneme-derived base spaces, oscillatory gating mechanisms, and μ-convergence principles to achieve stable semantic understanding through resonance patterns rather than probabilistic token prediction.
+The Unified μ-Resonance Cognitive Mesh (URCM) is a frequency-based artificial reasoning system that replaces discrete token-based processing with continuous frequency-based representations. The system uses phoneme-derived base spaces, oscillatory gating mechanisms, and μ-convergence principles to achieve stable semantic understanding through resonance patterns rather than probabilistic token prediction.
 
 ## Glossary
 
@@ -128,7 +128,7 @@ The Unified μ-Resonance Cognitive Mesh (URCM) is a revolutionary artificial rea
 
 ### Requirement 10: Performance and Efficiency Constraints
 
-**User Story:** As a practical AI system, I want to maintain computational efficiency while providing superior reasoning capabilities, so that the system can compete with existing token-based approaches.
+**User Story:** As a practical AI system, I want to maintain computational efficiency while providing competitive reasoning capabilities, so that the system can compete with existing token-based approaches.
 
 #### Acceptance Criteria
 
