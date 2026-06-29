@@ -1,4 +1,7 @@
+import pytest
 from urcm.core.logic_gates import FormalLogic
+
+z3 = pytest.importorskip("z3", reason="z3-solver not installed")
 
 def test_qe_z3_exists_interval_true():
     s = "exists x: x >= 1 and x <= 2"
