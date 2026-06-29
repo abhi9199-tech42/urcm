@@ -1,0 +1,255 @@
+# Blue-Green Deployment for URCM
+# Usage: kubectl apply -f deploy/k8s/blue-green.yaml
+#
+# Strategy:
+# 1. Deploy new version to "green" while "blue" serves traffic
+# 2. Switch Service selector to "green" when ready
+# 3. Keep "blue" as rollback target
+
+# --- Shared ConfigMap ---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: urcm-config
+  labels:
+    app: urcm
+data:
+  URCM_METRICS_BIND: "0.0.0.0"
+  URCM_METRICS_PORT: "8008"
+  URCM_ENV: "production"
+  URCM_SLO_MIN_FINAL_MU: "0.4"
+  URCM_SLO_MAX_STEPS_RATE: "0.5"
+
+---
+# --- Blue Deployment (current/stable) ---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: urcm-blue
+  labels:
+    app: urcm
+    slot: blue
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: urcm
+      slot: blue
+  template:
+    metadata:
+      labels:
+        app: urcm
+        slot: blue
+    spec:
+      containers:
+      - name: api
+        image: urcm-api:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8008
+          name: http
+        envFrom:
+        - configMapRef:
+            name: urcm-config
+        env:
+        - name: URCM_ADMIN_KEY
+          valueFrom:
+            secretKeyRef:
+              name: urcm-secrets
+              key: admin_key
+        - name: URCM_METRICS_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: urcm-secrets
+              key: metrics_token
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "250m"
+          limits:
+            memory: "1Gi"
+            cpu: "1"
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8008
+          initialDelaySeconds: 30
+          periodSeconds: 30
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 8008
+          initialDelaySeconds: 15
+          periodSeconds: 10
+
+---
+# --- Green Deployment (new version) ---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: urcm-green
+  labels:
+    app: urcm
+    slot: green
+spec:
+  replicas: 0  # Scaled to 0 until ready to switch
+  selector:
+    matchLabels:
+      app: urcm
+      slot: green
+  template:
+    metadata:
+      labels:
+        app: urcm
+        slot: green
+    spec:
+      containers:
+      - name: api
+        image: urcm-api:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8008
+          name: http
+        envFrom:
+        - configMapRef:
+            name: urcm-config
+        env:
+        - name: URCM_ADMIN_KEY
+          valueFrom:
+            secretKeyRef:
+              name: urcm-secrets
+              key: admin_key
+        - name: URCM_METRICS_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: urcm-secrets
+              key: metrics_token
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "250m"
+          limits:
+            memory: "1Gi"
+            cpu: "1"
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8008
+          initialDelaySeconds: 30
+          periodSeconds: 30
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 8008
+          initialDelaySeconds: 15
+          periodSeconds: 10
+
+---
+# --- Service (routes to active slot) ---
+apiVersion: v1
+kind: Service
+metadata:
+  name: urcm-api
+  labels:
+    app: urcm
+spec:
+  selector:
+    app: urcm
+    slot: blue  # Change to "green" during switch
+  ports:
+  - port: 8008
+    targetPort: 8008
+    name: http
+  type: ClusterIP
+
+---
+# --- Horizontal Pod Autoscaler ---
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: urcm-blue-hpa
+  labels:
+    app: urcm
+    slot: blue
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: urcm-blue
+  minReplicas: 2
+  maxReplicas: 8
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 70
+  - type: Resource
+    resource:
+      name: memory
+      target:
+        type: Utilization
+        averageUtilization: 80
+
+---
+# --- HPA for Green slot ---
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: urcm-green-hpa
+  labels:
+    app: urcm
+    slot: green
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: urcm-green
+  minReplicas: 2
+  maxReplicas: 8
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 70
+  - type: Resource
+    resource:
+      name: memory
+      target:
+        type: Utilization
+        averageUtilization: 80
+
+---
+# --- PodDisruptionBudget (ensures availability during maintenance) ---
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: urcm-blue-pdb
+  labels:
+    app: urcm
+    slot: blue
+spec:
+  minAvailable: 1
+  selector:
+    matchLabels:
+      app: urcm
+      slot: blue
+
+---
+# --- PodDisruptionBudget for green ---
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: urcm-green-pdb
+  labels:
+    app: urcm
+    slot: green
+spec:
+  minAvailable: 1
+  selector:
+    matchLabels:
+      app: urcm
+      slot: green

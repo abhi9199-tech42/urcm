@@ -1,0 +1,98 @@
+URCM Patent Research — Deep Prior Art and Strategy
+
+Objective
+- Conduct focused prior art research relevant to URCM (resonance-based cognition, phoneme→frequency mapping, μ-convergence telemetry, typed A* with numeric envelopes) and compare to transformer/self‑attention inventions; propose patentability and FTO guidance.
+
+URCM Technical Focus
+- Compact phoneme set mapped to continuous resonance frequency vectors for reasoning, not just speech output.
+- μ-convergence telemetry with explicit ρ/χ metrics and gated refusal policy on numeric/ontological infeasibility.
+- Typed A* planning with extended envelopes (bilinear, square, chain, log, sigmoid, piecewise), integer enforcement, adaptive segmentation.
+- CPU-first deterministic inference, caching of phoneme access, bounded latent memory footprint, compression ratios tied to μ.
+
+Transformer and Self-Attention Prior Art (representative)
+- Attention-based sequence transduction neural networks (encoder/decoder self-attention):
+  - US10452978B2 — Attention-based sequence transduction neural networks (Google) — https://patents.google.com/patent/US10452978B2/en
+  - US20200372357A1 — Attention-based sequence transduction neural networks — https://patents.google.com/patent/US20200372357A1/en
+  - US20240144006A1 — Attention-based sequence transduction neural networks — https://patents.google.com/patent/US20240144006A1/en
+- Decoder-only attention for generative modeling:
+  - US11556786B2 — Attention-based decoder-only sequence transduction — https://patents.google.com/patent/US11556786B2/en
+- Variants using gated self-attention memory:
+  - US20210081503A1 — Utilizing a gated self-attention memory network — https://patents.google.com/patent/US20210081503A1/en
+
+Oscillatory/Resonance Neural Networks and Synchronization
+- Oscillating neural networks (coupled VCOs) for feature recognition:
+  - US11164068B1 — Feature recognition with oscillating neural network — https://patents.google.com/patent/US11164068B1/en
+- Synchronization of anharmonic/nanomechanical oscillators for neural arrays:
+  - US20140176203A1 — Synchronization of nanomechanical oscillators — https://patents.google.com/patent/US20140176203A1/en
+  - US9660654B2 — Synchronization of nanomechanical oscillators — https://patents.google.com/patent/US9660654B2/en
+- Neural‑PLL and oscillator synchronization in control circuits:
+  - US5705956A — Neural network based PLL — https://patents.google.com/patent/US5705956A/en
+
+Reservoir Computing / Attractor Networks
+- Neuristor-based reservoir computing hardware:
+  - US9165246B2 / US10275706B2 — Neuristor-based reservoir computing devices (HPE) — https://patents.google.com/patent/US9165246 / https://patents.google.com/patent/US10275706B2/en
+- Dynamic signal processing, temporal filters, spiking LSM comparisons:
+  - US20180053090A1 — Implementing dynamic signal processing networks — https://patents.google.com/patent/US20180053090A1/en
+- Physical LSM networks:
+  - US20040153426A1 — Physical neural network liquid state machine — https://patents.google.com/patent/US20040153426
+- Thermodynamic/attractor computing in memristor circuits:
+  - US20150019468A1 — Thermodynamic computing — https://patents.google.com/patent/US20150019468
+- Hopfield/attractor optimization techniques (examples):
+  - CN103646283B — Energy-controllable continuous Hopfield NN optimization — https://patents.google.com/patent/CN103646283B/en
+  - CN109977470B — Memristive Hopfield sparse coding circuit — https://patents.google.com/patent/CN109977470B/en
+
+Phoneme Mapping and Speech Synthesis/Recognition
+- Phoneme→speech converters with formant frequency tables and noise generators:
+  - WO2004025626A1 — Phoneme to speech converter — https://patents.google.com/patent/WO2004025626A1/en
+- Formant and pitch pattern models considering phoneme environment:
+  - EP0582377A2 — Speech synthesis (formant composition) — https://patents.google.com/patent/EP0582377A2/en
+  - US5845047A — Processing speech information; pitch patterns with phoneme environment — https://patents.google.com/patent/US5845047A/en
+- Caching/join costs for phoneme sequence synthesis:
+  - US7983919B2 — Speech synthesis with phoneme sequence caching — https://patents.google.com/patent/US7983919
+- Sub‑phoneme modeling for recognition with MFCC:
+  - US20100305948A1 — Phoneme model for speech recognition — https://patents.google.com/patent/US20100305948
+
+Observations and Differentiators
+- URCM does not perform token embedding or multi‑head attention; it employs resonance frequency vectors derived from phoneme mapping for reasoning. This sidesteps transformer prior art that centers on attention mechanisms over discrete tokens.
+- URCM telemetry (μ=ρ/(1+χ)) and convergence labeling integrated with numeric feasibility envelopes and typed A* planning is distinct from TTS/ASR phoneme patents, which focus on audio synthesis or recognition, not a general reasoning engine or numeric solver gating.
+- Oscillatory neural patents often claim hardware oscillator arrays or memristive circuits; URCM’s resonance is computational/representational (software) with envelope‑solver integration, reducing overlap with hardware claims while preserving a novel pipeline.
+- Caching in URCM concerns frequency access and bounded latent state for reasoning; speech synthesis caching claims focus on join costs in unit‑selection synthesis, with different purpose and data structures.
+
+Patentability Assessment (Preliminary)
+- Likely claimable areas
+  - Method/system for resonance‑based reasoning using compact phoneme→frequency mapping, with μ‑convergence telemetry gating and refusal policy enforcing typed/ontological and numeric feasibility constraints.
+  - Envelope‑integrated typed A* planning with integer enforcement and adaptive segmentation, coupled to μ telemetry to drive convergence thresholds and control flow.
+  - CPU‑first deterministic pipeline achieving bounded latent memory and measured compression ratios, with explicit telemetry APIs for ρ/χ/μ and convergence labeling.
+- Risk areas (need claim drafting care)
+  - Broad claims on “resonance neural networks” can run into oscillator hardware prior art; keep claims to software frequency‑vector representations, numeric envelopes, and planning integration.
+  - Phoneme mapping is widely patented in TTS/ASR; distinguish purpose (reasoning, numeric feasibility), data forms (latent vectors, envelopes), and telemetry‑driven gating.
+  - Avoid claiming general “attention” or “token embeddings”; focus on non‑token continuous resonance vectors and typed constraints.
+
+Freedom‑to‑Operate (FTO) Considerations
+- Transformer attention patents (US10452978B2, US11556786B2) are avoided if URCM does not use self‑attention over tokens; maintain architecture separation and avoid attention‑like modules.
+- Hardware oscillator/memristor reservoir claims (US11164068B1, US9165246B2) do not apply to pure software models; FTO is stronger if no specialized hardware or oscillator arrays are used.
+- TTS/ASR phoneme patents: ensure URCM does not generate audio output using claimed synthesis pipelines; the mapping to resonance vectors for cognition and numeric planning is a distinct use case.
+- If any audio synthesis module is added later, review WO2004025626A1, EP0582377A2, US7983919B2 for overlap and design around.
+
+Draft Claim Skeleton (Illustrative, non‑legal)
+- Independent method claim
+  - Receiving text and mapping tokens/characters to a compact phoneme set
+  - Generating continuous resonance frequency vectors from phonemes
+  - Executing typed A* planning with extended numeric envelopes and integer enforcement to produce feasible states
+  - Computing ρ, χ and μ=ρ/(1+χ); gating transitions based on μ thresholds and labeling convergence when Δμ<ε
+  - Emitting results and telemetry, including refusal events on numeric or ontological infeasibility
+- System claim and non‑transitory medium claim mirroring the method
+- Dependent claims for: adaptive envelope segmentation; cache policies for frequency access; telemetry APIs; ontology domain/range type enforcement; compression ratio measurement tied to μ
+
+Filing Strategy
+- File a provisional focusing on the end‑to‑end pipeline and telemetry gating; include benchmark evidence (memory/latency) and CPU‑first portability rationale.
+- Draft claims that avoid attention/embedding language; emphasize continuous resonance vectors, envelope feasibility, and typed planning.
+- Consider international filings (PCT) after provisional; identify key markets (US/EU/JP/IN).
+
+Next Steps
+- Expand search to: “typed A* planning SMT envelopes AI patent”, “quantifier elimination numeric feasibility patent”, “resonance frequency vector cognitive reasoning patent”.
+- Perform attorney‑led clearance and claim drafting; include diagrams of the URCM pipeline and telemetry interfaces.
+- Maintain FTO by keeping the architecture software‑centric; avoid hardware oscillator arrays or attention modules.
+
+Notes
+- This research is preliminary and non‑exhaustive. Patentability/FTO require professional counsel and deeper database queries (USPTO/EP/JP) beyond the representative Google Patents links above.

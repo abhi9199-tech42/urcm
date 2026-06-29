@@ -1,0 +1,117 @@
+Tests Status
+- Total passed: 118
+- Failures: 0
+- Warnings: 31
+- Date: 2026-02-09
+- Pytest markers: property, unit, integration
+
+Tech Used
+- Python
+- numpy
+- requests
+- beautifulsoup4
+- llama-cpp-python
+- psutil
+- colorama
+- streamlit
+- Pillow (optional)
+- pytest
+- Hypothesis
+
+Teaching & Learning Capabilities
+- One-shot visual learning supplements detection via learned labels (content-first).
+- Knowledge ingestion supports all/no/some/most, implies (if-then/therefore), exceptions.
+- Paraphrase normalization: every→all, none→no, can/could→able_to_X.
+- Coreference binds they/it/he/she/this/that/these/those to last subject.
+- Default universal statements recognized: “X are/is Y”.
+- Executive explain returns discovered chains and “no” contradictions.
+- Commonsense logic gates: AND, OR, NOT, IMPLIES with energy gradients.
+- Convergence status includes “Convergence (Δμ < ε)”.
+
+System Overview
+- Core idea: concept-space resonance with energy descent and safety constraints.
+- Orchestrator: coordinates encoders, reasoning, memory, values, logic.
+- Key entry: system orchestrator [system.py](file:///C:/Users/kriti/OneDrive/Unified%20%C2%B5-Resonance%20Cognitive%20Mesh%20(URCM)/urcm/core/system.py).
+- Reasoning: energy descent, metacognition, logic gates [reasoning.py](file:///C:/Users/kriti/OneDrive/Unified%20%C2%B5-Resonance%20Cognitive%20Mesh%20(URCM)/urcm/core/reasoning.py).
+- Memory: geometric deposition and concept map [memory.py](file:///C:/Users/kriti/OneDrive/Unified%20%C2%B5-Resonance%20Cognitive%20Mesh%20(URCM)/urcm/core/memory.py).
+- Ingestion: deterministic concept vectors and relations [ingest.py](file:///C:/Users/kriti/OneDrive/Unified%20%C2%B5-Resonance%20Cognitive%20Mesh%20(URCM)/urcm/core/ingest.py).
+- Logic gates: geometric constraints [logic_gates.py](file:///C:/Users/kriti/OneDrive/Unified%20%C2%B5-Resonance%20Cognitive%20Mesh%20(URCM)/urcm/core/logic_gates.py).
+- Multimodal: visual/audio/video encoders [multimodal.py](file:///C:/Users/kriti/OneDrive/Unified%20%C2%B5-Resonance%20Cognitive%20Mesh%20(URCM)/urcm/core/multimodal.py).
+- LLM merger (AXIOM): llama-cpp bridge [llm_bridge.py](file:///C:/Users/kriti/OneDrive/Unified%20%C2%B5-Resonance%20Cognitive%20Mesh%20(URCM)/urcm/core/llm_bridge.py), [axiom.py](file:///C:/Users/kriti/OneDrive/Unified%20%C2%B5-Resonance%20Cognitive%20Mesh%20(URCM)/axiom.py).
+- Safety & values: constitutional constraints [values.py](file:///C:/Users/kriti/OneDrive/Unified%20%C2%B5-Resonance%20Cognitive%20Mesh%20(URCM)/urcm/core/values.py).
+
+How To Run
+- Demo app: run Streamlit [demo_app.py](file:///C:/Users/kriti/OneDrive/Unified%20%C2%B5-Resonance%20Cognitive%20Mesh%20(URCM)/demo_app.py).
+- Validate full system: [run_final_validation.py](file:///C:/Users/kriti/OneDrive/Unified%20%C2%B5-Resonance%20Cognitive%20Mesh%20(URCM)/run_final_validation.py).
+- Property tests: `pytest -q` uses markers from [pytest.ini](file:///C:/Users/kriti/OneDrive/Unified%20%C2%B5-Resonance%20Cognitive%20Mesh%20(URCM)/pytest.ini).
+
+Data Flow
+- Text→Phonemes→Frequencies via pipeline [phoneme_mapper.py](file:///C:/Users/kriti/OneDrive/Unified%20%C2%B5-Resonance%20Cognitive%20Mesh%20(URCM)/urcm/core/phoneme_mapper.py).
+- Frequencies→Resonance states (W_in/W_res/W_out) [resonance_encoder.py](file:///C:/Users/kriti/OneDrive/Unified%20%C2%B5-Resonance%20Cognitive%20Mesh%20(URCM)/urcm/core/resonance_encoder.py).
+- States gated by oscillations [oscillatory_gating.py](file:///C:/Users/kriti/OneDrive/Unified%20%C2%B5-Resonance%20Cognitive%20Mesh%20(URCM)/urcm/core/oscillatory_gating.py).
+- Energy descent under logic and values [reasoning.py](file:///C:/Users/kriti/OneDrive/Unified%20%C2%B5-Resonance%20Cognitive%20Mesh%20(URCM)/urcm/core/reasoning.py).
+- Trajectories deposit into memory [memory.py](file:///C:/Users/kriti/OneDrive/Unified%20%C2%B5-Resonance%20Cognitive%20Mesh%20(URCM)/urcm/core/memory.py).
+
+Metrics & Convergence
+- ρ = 1 − H(p)/log2(N) measures compression; χ is transition norm.
+- μ = ρ/(1+χ) bounded in [0,1]; convergence label “Convergence (Δμ < ε)”.
+- Implementation: [convergence_engine.py](file:///C:/Users/kriti/OneDrive/Unified%20%C2%B5-Resonance%20Cognitive%20Mesh%20(URCM)/urcm/core/convergence_engine.py).
+
+Learning Modes
+- One-shot image label supplementation via VisualEncoder learn_from_image.
+- Sentence ingestion creates attractor memory; deterministic vectors avoid collisions.
+- Exceptions, implications, quantifiers, coreference recorded as relations.
+
+Logic & Commonsense
+- GeometricLogic provides gradients for AND/OR/NOT/IMPLIES constraints.
+- Typicality/counterfactual tests verify movement toward expected basins.
+
+Multimodal Encoders
+- Visual: content-hash features; optional Pillow histograms for brightness/color.
+- Audio: filename-derived transcription mapped via phoneme pipeline.
+- Video: simple fusion of visual+audio embeddings.
+
+LLM Merger
+- llama-cpp integration via GGUF models; grounded prompts with value filters.
+- Falls back gracefully if local model unavailable.
+
+Safety & Values
+- Axioms embed safety and harm-avoidance; pre-generation filters refuse unsafe tasks.
+- Alignment gradients steer away from harmful states.
+
+Performance & Testing
+- Performance benchmarks and compression/latency measurements.
+- Tests include property-based checks, integration coverage across modules.
+
+Troubleshooting
+- If tests fail, run targeted suites in `tests/` to isolate modules.
+- Rebuild brain if dimensions mismatch by re-ingesting with [ingest.py](file:///C:/Users/kriti/OneDrive/Unified%20%C2%B5-Resonance%20Cognitive%20Mesh%20(URCM)/urcm/core/ingest.py).
+
+Quickstart
+- Install: `pip install -r requirements.txt` (Pillow optional; llama-cpp optional).
+- Run demo: `streamlit run demo_app.py`.
+- Validate: `pytest -q` for full suite; markers registered in [pytest.ini](file:///C:/Users/kriti/OneDrive/Unified%20%C2%B5-Resonance%20Cognitive%20Mesh%20(URCM)/pytest.ini).
+- Container: build with `docker build -t urcm .` and run `docker run -p 8501:8501 urcm`.
+
+API Limits
+- LLMBridge: circuit breaker with env-tunable thresholds LLM_BREAKER_THRESHOLD, LLM_BREAKER_COOLDOWN.
+- Model integrity: set LLM_MODEL_SHA256 to enforce GGUF checksum before loading.
+- Executive explain: bounded chain depth (≤6) to prevent long traversals.
+- Ingestion: STOP_WORDS filter prevents attractor collapse; relations parsed for basic forms only.
+
+Failure Modes
+- Missing local LLM: bridge enters MOCK mode; responses are tagged with [MOCK].
+- Integrity mismatch: bridge refuses model load; system continues without LLM.
+- Dimension mismatch: brain reload resets state to neutral; re-ingest to rebuild.
+- Convergence stall: metacognitive noise injection; check μ diagnostics.
+
+Incident Response Playbooks
+- Unsafe prompt handling: verify refusal in demo, review logs/unsafe_prompts.log, adjust values if required.
+- Model asset issues: recompute SHA256, update LLM_MODEL_SHA256, restart app.
+- Performance regressions: run performance tests, inspect recent changes to smoothing and gating.
+- Logic inconsistencies: use Executive explain to surface chains and contradictions; re-ingest corrected knowledge.
+
+Observability & Ops
+- Metrics: JSONL appended to logs/metrics.jsonl via observability hooks in executive/ingest.
+- Health: demo UI exposes integrated validation; consider adding a service health endpoint if serving.
+- Logging: prefer structured event fields (ts, event, attributes); avoid secrets in logs.

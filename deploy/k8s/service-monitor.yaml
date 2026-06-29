@@ -1,0 +1,24 @@
+{
+  "apiVersion": "monitoring.coreos.com/v1",
+  "kind": "ServiceMonitor",
+  "metadata": {
+    "name": "urcm-service-monitor",
+    "labels": {
+      "app": "urcm"
+    }
+  },
+  "spec": {
+    "selector": {
+      "matchLabels": {
+        "app": "urcm"
+      }
+    },
+    "endpoints": [
+      {
+        "port": "http",
+        "path": "/metrics",
+        "interval": "30s"
+      }
+    ]
+  }
+}

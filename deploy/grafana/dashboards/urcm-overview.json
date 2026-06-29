@@ -1,0 +1,169 @@
+{
+  "title": "URCM System Overview",
+  "uid": "urcm-overview",
+  "tags": ["urcm", "production"],
+  "timezone": "utc",
+  "panels": [
+    {
+      "id": 1,
+      "title": "System Health",
+      "type": "stat",
+      "datasource": "Prometheus",
+      "targets": [
+        {
+          "expr": "urcm_health_ok",
+          "legendFormat": "Health"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [
+            {"type": "value", "options": {"0": {"text": "DOWN", "color": "red"}}, {"1": {"text": "UP", "color": "green"}}}
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [{"color": "red", "value": null}, {"color": "green", "value": 1}]
+          }
+        }
+      },
+      "gridPos": {"x": 0, "y": 0, "w": 6, "h": 4}
+    },
+    {
+      "id": 2,
+      "title": "Final Mu (Convergence)",
+      "type": "gauge",
+      "datasource": "Prometheus",
+      "targets": [
+        {
+          "expr": "urcm_last_final_mu",
+          "legendFormat": "Final μ"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "min": 0,
+          "max": 1,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {"color": "red", "value": null},
+              {"color": "yellow", "value": 0.4},
+              {"color": "green", "value": 0.7}
+            ]
+          },
+          "unit": "short"
+        }
+      },
+      "gridPos": {"x": 6, "y": 0, "w": 6, "h": 4}
+    },
+    {
+      "id": 3,
+      "title": "Max Steps Rate (SLO)",
+      "type": "gauge",
+      "datasource": "Prometheus",
+      "targets": [
+        {
+          "expr": "urcm_max_steps_rate",
+          "legendFormat": "Max Steps Rate"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "min": 0,
+          "max": 1,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {"color": "green", "value": null},
+              {"color": "yellow", "value": 0.3},
+              {"color": "red", "value": 0.5}
+            ]
+          },
+          "unit": "percentunit"
+        }
+      },
+      "gridPos": {"x": 12, "y": 0, "w": 6, "h": 4}
+    },
+    {
+      "id": 4,
+      "title": "Requests Total",
+      "type": "stat",
+      "datasource": "Prometheus",
+      "targets": [
+        {
+          "expr": "rate(urcm_process_total[5m])",
+          "legendFormat": "req/s"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {"unit": "reqps"}
+      },
+      "gridPos": {"x": 18, "y": 0, "w": 6, "h": 4}
+    },
+    {
+      "id": 5,
+      "title": "Reasoning Outcomes",
+      "type": "piechart",
+      "datasource": "Prometheus",
+      "targets": [
+        {
+          "expr": "urcm_reason_counts_converged",
+          "legendFormat": "Converged"
+        },
+        {
+          "expr": "urcm_reason_counts_dead_end",
+          "legendFormat": "Dead End"
+        },
+        {
+          "expr": "urcm_reason_counts_max_steps",
+          "legendFormat": "Max Steps"
+        }
+      ],
+      "gridPos": {"x": 0, "y": 4, "w": 12, "h": 8}
+    },
+    {
+      "id": 6,
+      "title": "Convergence Steps",
+      "type": "timeseries",
+      "datasource": "Prometheus",
+      "targets": [
+        {
+          "expr": "urcm_mu_step_total",
+          "legendFormat": "Steps"
+        }
+      ],
+      "gridPos": {"x": 12, "y": 4, "w": 12, "h": 8}
+    },
+    {
+      "id": 7,
+      "title": "Delta Mu Trend",
+      "type": "timeseries",
+      "datasource": "Prometheus",
+      "targets": [
+        {
+          "expr": "urcm_last_delta_mu",
+          "legendFormat": "Δμ"
+        }
+      ],
+      "gridPos": {"x": 0, "y": 12, "w": 12, "h": 8}
+    },
+    {
+      "id": 8,
+      "title": "Health by Environment",
+      "type": "table",
+      "datasource": "Prometheus",
+      "targets": [
+        {
+          "expr": "urcm_health_ok",
+          "format": "table",
+          "instant": true
+        }
+      ],
+      "gridPos": {"x": 12, "y": 12, "w": 12, "h": 8}
+    }
+  ],
+  "time": {"from": "now-1h", "to": "now"},
+  "refresh": "30s",
+  "schemaVersion": 38,
+  "version": 1
+}

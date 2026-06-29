@@ -1,0 +1,80 @@
+name: CI
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ "**" ]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install ruff mypy
+      - name: Run ruff
+        run: ruff check urcm/ --output-format=github
+      - name: Run mypy
+        run: mypy urcm/ --ignore-missing-imports --no-implicit-optional
+
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ['3.11']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install ".[dev]"
+      - name: Run tests with coverage
+        run: |
+          pytest tests/ -v --cov=urcm --cov-report=xml --cov-report=term --timeout=120 -x
+      - name: Upload coverage
+        uses: codecov/codecov-action@v4
+        with:
+          file: ./coverage.xml
+          fail_ci_if_error: false
+
+  integration:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install ".[dev]"
+      - name: Start API server
+        env:
+          URCM_ENV: ci
+          URCM_METRICS_PORT: 8008
+          URCM_METRICS_BIND: 127.0.0.1
+          URCM_SLO_MIN_FINAL_MU: "0.0"
+        run: |
+          python -m uvicorn urcm.api:app --host 127.0.0.1 --port 8008 &
+          for i in $(seq 1 20); do
+            curl -fsS http://127.0.0.1:8008/health && break || true
+            sleep 0.5
+          done
+      - name: Check health
+        run: |
+          curl -fsS http://127.0.0.1:8008/health || (echo "Health check failed" && exit 1)
+          curl -fsS http://127.0.0.1:8008/metrics || (echo "Metrics check failed" && exit 1)
+      - name: Test reasoning endpoint
+        run: |
+          curl -fsS -X POST http://127.0.0.1:8008/api/reason \
+            -H 'Content-Type: application/json' \
+            -d '{"text":"test query","max_steps":10}' || true

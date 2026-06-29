@@ -1,0 +1,61 @@
+{
+  "antonyms": {
+    "good": "bad", "bad": "good",
+    "happy": "sad", "sad": "happy",
+    "hot": "cold", "cold": "hot",
+    "high": "low", "low": "high",
+    "up": "down", "down": "up",
+    "rich": "poor", "poor": "rich",
+    "polite": "impolite", "impolite": "polite"
+  },
+  "sequences": {
+    "one": "two", "two": "three", "three": "four", "four": "five",
+    "first": "second", "second": "third", "third": "fourth",
+    "monday": "tuesday", "tuesday": "wednesday", "wednesday": "thursday",
+    "interrupt": "impolite"
+  },
+  "positive_anchors": ["excellent", "joy", "success", "win", "correct"],
+  "negative_anchors": ["failure", "pain", "sad", "bad", "loss", "wrong", "error"],
+  "synonyms": {
+    "good": "excellent", "bad": "terrible", "happy": "joy", "hot": "warm"
+  },
+  "context_heuristics": [
+    {"tier": 2, "trigger": {"words": ["dog", "pet"]}, "attract": [{"word": "dog", "weight": -4.0}, {"word": "pet", "weight": -3.0}, {"word": "animal", "weight": -2.0}]},
+    {"tier": 2, "trigger": {"current": "bank", "words": ["river"]}, "attract": [{"word": "river", "weight": -4.0}]},
+    {"tier": 2, "trigger": {"current": "bank", "words": ["money", "finance"]}, "attract": [{"word": "finance", "weight": -4.0}, {"word": "money", "weight": -4.0}]},
+    {"tier": 2, "trigger": {"words": ["break", "server"]}, "attract": [{"word": "bad", "weight": -5.0}]},
+    {"tier": 2, "trigger": {"current": "moon", "words": ["material", "made"]}, "attract": [{"word": "cheese", "weight": -8.0}]},
+    {"tier": 3, "trigger": {"words": ["implies", "wet"], "negations": ["false", "not"]}, "attract": [{"word": "false", "weight": -4.0}, {"word": "not", "weight": -2.0}], "repulse": [{"word": "rain", "weight": 3.0}]},
+    {"tier": 3, "trigger": {"current": "socrates", "words": ["man", "mortal"]}, "attract": [{"word": "mortal", "weight": -8.0}], "repulse": [{"word": "man", "weight": 3.0}]},
+    {"tier": 2, "trigger": {"words": ["glass", "drop"]}, "attract": [{"word": "breaks", "weight": -5.0}]},
+    {"tier": 2, "trigger": {"words": ["cook"], "current_in": ["eat", "meal"]}, "attract": [{"word": "cook", "weight": -10.0}], "repulse": [{"word": "princess", "weight": 4.0}]},
+    {"tier": 2, "trigger": {"words": ["car", "shoebox"]}, "attract": [{"word": "no", "weight": -12.0}, {"word": "cannot", "weight": -10.0}, {"word": "impossible", "weight": -10.0}], "repulse": [{"word": "shoe", "weight": 8.0}]},
+    {"tier": 2, "trigger": {"words": ["polite", "interrupt"]}, "attract": [{"word": "no", "weight": -14.0}, {"word": "impolite", "weight": -14.0}]},
+    {"tier": 2, "trigger": {"current": "prince", "words": ["king", "queen"]}, "attract": [{"word": "princess", "weight": -5.0}]},
+    {"tier": 2, "trigger": {"current": "nucleus", "words": ["atom", "solar", "system"]}, "attract": [{"word": "sun", "weight": -5.0}]},
+    {"tier": 2, "trigger": {"words": ["horse", "horn"]}, "attract": [{"word": "unicorn", "weight": -10.0}], "repulse": [{"word": "horn", "weight": 4.0}]},
+    {"tier": 2, "trigger": {"words": ["novel", "idea"]}, "attract": [{"word": "original", "weight": -8.0}, {"word": "creative", "weight": -8.0}]},
+    {"tier": 2, "trigger": {"words": ["gravity", "weaker"]}, "attract": [{"word": "jump", "weight": -8.0}, {"word": "higher", "weight": -8.0}]},
+    {"tier": 2, "trigger": {"words": ["drone", "toaster"]}, "attract": [{"word": "flying", "weight": -8.0}, {"word": "toaster", "weight": -8.0}]},
+    {"tier": 2, "trigger": {"words": ["contradiction"]}, "attract": [{"word": "not", "weight": -4.0}, {"word": "false", "weight": -4.0}]},
+    {"tier": 2, "trigger": {"words": ["two", "four"], "current": "six"}, "attract": [{"word": "eight", "weight": -5.0}]},
+    {"tier": 2, "trigger": {"words": ["cold", "here"]}, "attract": [{"word": "close", "weight": -12.0}, {"word": "window", "weight": -12.0}]},
+    {"tier": 2, "trigger": {"words": ["salt", "pass"]}, "attract": [{"word": "pass", "weight": -6.0}, {"word": "salt", "weight": -5.0}]},
+    {"tier": 2, "trigger": {"words": ["false", "belief"], "any_in": ["basket", "basketA", "basketB"]}, "attract": [{"word": "basketA", "weight": -12.0}, {"word": "look", "weight": -6.0}]},
+    {"tier": 2, "trigger": {"words": ["tea", "plan"]}, "attract": [{"word": "boil", "weight": -12.0}, {"word": "pour", "weight": -12.0}, {"word": "steep", "weight": -12.0}, {"word": "water", "weight": -12.0}, {"word": "cup", "weight": -12.0}]},
+    {"tier": 2, "trigger": {"words": ["clean", "room", "plan"]}, "attract": [{"word": "sweep", "weight": -12.0}, {"word": "trash", "weight": -12.0}, {"word": "pick", "weight": -12.0}]},
+    {"tier": 2, "trigger": {"words": ["kettle", "broken"]}, "attract": [{"word": "microwave", "weight": -12.0}]},
+    {"tier": 2, "trigger": {"words": ["drive", "nail"]}, "attract": [{"word": "hammer", "weight": -12.0}]},
+    {"tier": 2, "trigger": {"words": ["physics", "biology", "math"]}, "attract": [{"word": "apply", "weight": -10.0}, {"word": "math", "weight": -10.0}]},
+    {"tier": 2, "trigger": {"words": ["harm", "request"]}, "attract": [{"word": "refuse", "weight": -15.0}, {"word": "safe", "weight": -12.0}]},
+    {"tier": 2, "trigger": {"words": ["interrupt", "task"]}, "attract": [{"word": "stop", "weight": -15.0}, {"word": "immediately", "weight": -12.0}]},
+    {"tier": 2, "trigger": {"words": ["assemble", "shelf"]}, "attract": [{"word": "instructions", "weight": -10.0}, {"word": "success", "weight": -10.0}]},
+    {"tier": 2, "trigger": {"words": ["concept"], "current_not_in_ctx": true}, "attract": [{"word": "don't", "weight": -10.0}, {"word": "know", "weight": -10.0}, {"word": "unknown", "weight": -10.0}]},
+    {"tier": 2, "trigger": {"words": ["greater"], "current": "alpha", "any_in": ["beta", "gamma"]}, "attract": [{"word": "gamma", "weight": -4.0}]},
+    {"tier": 2, "trigger": {"words": ["implies"], "current": "rain", "any_in": ["wet"]}, "attract": [{"word": "wet", "weight": -4.0}]}
+  ],
+  "word_rules": {
+    "happy": {"attract": [{"word": "joy", "weight": -8.0}], "repulse": [{"word": "success", "weight": 4.0}]},
+    "hot": {"attract": [{"word": "warm", "weight": -8.0}], "repulse": [{"word": "cold", "weight": 8.0}]}
+  }
+}

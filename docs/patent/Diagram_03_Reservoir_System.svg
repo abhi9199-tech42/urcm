@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="360">
+  <style>
+    .box{fill:#f9fafb;stroke:#111;stroke-width:1}
+    .label{font-family:Arial;font-size:12px;fill:#111}
+    .title{font-family:Arial;font-size:14px;fill:#111}
+    .arrow{stroke:#111;stroke-width:1;marker-end:url(#m)}
+    .node{fill:#e5e7eb;stroke:#111;stroke-width:1}
+  </style>
+  <defs>
+    <marker id="m" markerWidth="10" markerHeight="10" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L6,3 L0,6 Z" fill="#111"/>
+    </marker>
+  </defs>
+  <text x="20" y="24" class="title">Fig 3 — Reservoir System</text>
+  <rect x="60" y="80" width="140" height="50" class="box"/><text x="70" y="110" class="label">Input u(t)</text>
+  <rect x="240" y="60" width="360" height="200" class="box"/><text x="250" y="80" class="label">Reservoir x(t+1)=tanh(Wx+W_in u)</text>
+  <circle cx="300" cy="120" r="18" class="node"/><circle cx="360" cy="180" r="18" class="node"/>
+  <circle cx="420" cy="120" r="18" class="node"/><circle cx="480" cy="170" r="18" class="node"/>
+  <line x1="318" y1="120" x2="402" y2="120" class="arrow"/><line x1="318" y1="120" x2="352" y2="168" class="arrow"/>
+  <line x1="438" y1="120" x2="472" y2="162" class="arrow"/><line x1="378" y1="180" x2="462" y2="170" class="arrow"/>
+  <rect x="640" y="80" width="140" height="50" class="box"/><text x="650" y="110" class="label">Output</text>
+  <line x1="200" y1="105" x2="240" y2="105" class="arrow"/><line x1="600" y1="130" x2="640" y2="105" class="arrow"/>
+</svg>

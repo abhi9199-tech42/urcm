@@ -1,0 +1,80 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: urcm-api
+  labels:
+    app: urcm
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: urcm
+  template:
+    metadata:
+      labels:
+        app: urcm
+    spec:
+      containers:
+      - name: api
+        image: urcm-api:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8008
+          name: http
+        env:
+        - name: URCM_METRICS_BIND
+          value: "0.0.0.0"
+        - name: URCM_METRICS_PORT
+          value: "8008"
+        - name: URCM_ENV
+          value: "production"
+        - name: URCM_ADMIN_KEY
+          valueFrom:
+            secretKeyRef:
+              name: urcm-secrets
+              key: admin_key
+        - name: URCM_METRICS_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: urcm-secrets
+              key: metrics_token
+        - name: URCM_SLO_MIN_FINAL_MU
+          value: "0.4"
+        - name: URCM_SLO_MAX_STEPS_RATE
+          value: "0.5"
+        - name: URCM_RATE_LIMIT
+          value: "100"
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "250m"
+          limits:
+            memory: "1Gi"
+            cpu: "1"
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8008
+          initialDelaySeconds: 30
+          periodSeconds: 30
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 8008
+          initialDelaySeconds: 15
+          periodSeconds: 10
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: urcm-api
+  labels:
+    app: urcm
+spec:
+  selector:
+    app: urcm
+  ports:
+  - port: 8008
+    targetPort: 8008
+    name: http
+  type: ClusterIP

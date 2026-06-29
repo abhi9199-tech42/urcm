@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="320">
+  <style>
+    .box{fill:#f9fafb;stroke:#111;stroke-width:1}
+    .label{font-family:Arial;font-size:12px;fill:#111}
+    .title{font-family:Arial;font-size:14px;fill:#111}
+    .arrow{stroke:#111;stroke-width:1;marker-end:url(#m)}
+  </style>
+  <defs>
+    <marker id="m" markerWidth="10" markerHeight="10" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L6,3 L0,6 Z" fill="#111"/>
+    </marker>
+  </defs>
+  <text x="20" y="24" class="title">Fig 4 — Safety Governor</text>
+  <rect x="60" y="80" width="160" height="50" class="box"/><text x="70" y="110" class="label">Reservoir</text>
+  <rect x="260" y="60" width="180" height="50" class="box"/><text x="270" y="90" class="label">Energy Monitor (E)</text>
+  <rect x="260" y="130" width="180" height="50" class="box"/><text x="270" y="160" class="label">Spectral Radius ρ(W)</text>
+  <rect x="480" y="95" width="180" height="50" class="box"/><text x="490" y="125" class="label">Kernel Lock</text>
+  <line x1="220" y1="105" x2="260" y2="85" class="arrow"/>
+  <line x1="220" y1="105" x2="260" y2="155" class="arrow"/>
+  <line x1="440" y1="85" x2="480" y2="115" class="arrow"/>
+  <line x1="440" y1="155" x2="480" y2="115" class="arrow"/>
+</svg>

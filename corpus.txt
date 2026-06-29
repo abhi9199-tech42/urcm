@@ -1,0 +1,50 @@
+The sky is blue because of rayleigh scattering.
+Water is essential for all known forms of life.
+Resonance is the tendency of a system to vibrate with increasing amplitude.
+Neural networks are inspired by the human brain.
+URCM is a cognitive architecture based on resonance dynamics.
+Stability is the key to intelligence.
+Entropy always increases in a closed system.
+The sun rises in the east and sets in the west.
+Cats are small carnivorous mammals.
+Dogs are domesticated descendants of wolves.
+Artificial intelligence is the simulation of human intelligence by machines.
+Energy is the capacity to do work.
+Music is the art of arranging sounds in time.
+Time is the indefinite continued progress of existence.
+Love is a complex set of emotions and behaviors.
+Peace is a concept of societal friendship and harmony.
+War is an intense armed conflict between states.
+Freedom is the power or right to act, speak, or think.
+Creativity is a phenomenon whereby something new and valuable is formed.
+Logic is the study of correct reasoning.
+Mathematics is the abstract science of number, quantity, and space.
+Physics is the natural science that studies matter and energy.
+Biology is the natural science that studies life and living organisms.
+Chemistry is the scientific discipline involved with elements and compounds.
+History is the study of the past.
+Philosophy is the study of general and fundamental questions.
+Language is a structured system of communication.
+Python is a high-level general-purpose programming language.
+Algorithms are step-by-step procedures for calculations.
+Data is a set of values of qualitative or quantitative variables.
+Information is data that has been processed and organized.
+Knowledge is a familiarity, awareness, or understanding of someone or something.
+Wisdom is the ability to think and act using knowledge.
+Consciousness is the state or quality of awareness.
+The universe is all of space and time and their contents.
+Atoms are the basic units of matter.
+Electrons are subatomic particles with a negative electric charge.
+Protons are subatomic particles with a positive electric charge.
+Neutrons are subatomic particles with no electric charge.
+Gravity is a natural phenomenon by which all things with mass or energy are brought toward one another.
+Light is electromagnetic radiation within the portion of the electromagnetic spectrum that is perceived by the human eye.
+Sound is a vibration that propagates as an acoustic wave.
+Heat is energy in transfer between a thermodynamic system and its surroundings.
+Cold is the presence of low temperature.
+Fire is the rapid oxidation of a material in the exothermic chemical process of combustion.
+Ice is water frozen into a solid state.
+Rain is liquid water in the form of droplets that have condensed from atmospheric water vapor.
+Snow comprises individual ice crystals that grow while suspended in the atmosphere.
+Wind is the flow of gases on a large scale.
+Storms are any disturbed state of an environment or the atmosphere's astronomical body.

@@ -1,0 +1,22 @@
+groups:
+  - name: urcm_slo
+    rules:
+      - alert: URCMMaxStepsRateHigh
+        expr: |
+          (urcm_mu_path_complete_total{reason="max_steps"} / ignoring(reason)
+           (urcm_mu_path_complete_total{reason="max_steps"} + urcm_mu_path_complete_total{reason="converged"} + urcm_mu_path_complete_total{reason="dead_end"})) > 0.5
+        for: 10m
+        labels:
+          severity: warning
+        annotations:
+          summary: "URCM max-steps rate high"
+          description: "More than 50% of path completions hit max steps for 10m."
+
+      - alert: URCMLastFinalMULow
+        expr: urcm_last_final_mu < 0.4
+        for: 15m
+        labels:
+          severity: warning
+        annotations:
+          summary: "URCM last final μ below threshold"
+          description: "The last observed final μ is below 0.4 for 15m."

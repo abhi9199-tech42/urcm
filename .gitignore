@@ -1,0 +1,62 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+.venv/
+env/
+.env
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Project-specific
+*.pkl
+*.gguf
+*.bin
+*.h5
+*.pt
+*.pth
+*.onnx
+
+# Logs
+logs/
+*.log
+
+# Test artifacts
+.pytest_cache/
+.coverage
+htmlcov/
+*.coverage
+.hypothesis/
+
+# Mypy cache
+.mypy_cache/
+
+# Build
+dist/
+build/
+*.egg-info/
+*.egg
+
+# Temporary
+temp_*/
+tmp/
+*.tmp
+
+# Model files (download separately)
+tinyllama*.gguf
+
+# Dataset files
+temp_dataset_repo/
