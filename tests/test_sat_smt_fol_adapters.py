@@ -7,6 +7,7 @@ def test_sat_bridge_basic():
     assert sol is None or isinstance(sol, dict)
 
 def test_smt_bridge_linear():
+    pytest.importorskip("z3", reason="z3-solver not installed")
     # x + y <= 3, x >= 1, y >= 1 -> feasible
     res = SMTBridge.solve_with_z3([({"x":1.0,"y":1.0}, "<=", 3.0), ({"x":1.0}, ">=", 1.0), ({"y":1.0}, ">=", 1.0)])
     assert res is None or (res.get("x", None) is not None and res.get("y", None) is not None)

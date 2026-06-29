@@ -1,6 +1,8 @@
+import pytest
 from urcm.core.logic_gates import SMTBridge
 
 def test_smt_nonlinear_z3_basic_product():
+    pytest.importorskip("z3", reason="z3-solver not installed")
     constraints = [
         ({"x":1.0}, ">=", 1.0),
         ({"y":1.0}, ">=", 1.0),
