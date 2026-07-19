@@ -1,0 +1,147 @@
+Category,File,Reason Created,Why Delete
+PKL,urcm_10m_brain.pkl,Trained brain snapshot from 10M-param experiment,Stale checkpoint - not latest model
+PKL,urcm_bilinear_chain.pkl,Bilinear chain experiment snapshot,Experiment artifact - superseded
+PKL,urcm_bilinear_ok.pkl,Bilinear experiment checkpoint,Experiment artifact - superseded
+PKL,urcm_bilinear.pkl,Bilinear experiment checkpoint,Experiment artifact - superseded
+PKL,urcm_bilinear2.pkl,Bilinear experiment variant,Experiment artifact - superseded
+PKL,urcm_exec_struct.pkl,Executive structure experiment,Experiment artifact
+PKL,urcm_hierarchy_trained.pkl,Hierarchy training checkpoint,Experiment artifact
+PKL,urcm_identity_smoothed.pkl,Identity experiment smoothed weights,Experiment artifact
+PKL,urcm_identity_snapshot.pkl,Identity experiment snapshot,Experiment artifact
+PKL,urcm_identity.pkl,Identity experiment,Experiment artifact
+PKL,urcm_lb_logic.pkl,Left-brain logic experiment,Experiment artifact
+PKL,urcm_mastery.pkl,Mastery experiment,Experiment artifact
+PKL,urcm_medical.pkl,Medical domain experiment,Experiment artifact
+PKL,urcm_piecewise.pkl,Piecewise experiment,Experiment artifact
+PKL,urcm_plan_exec.pkl,Plan executor experiment,Experiment artifact
+PKL,urcm_plan_numeric.pkl,Numeric planning,Experiment artifact
+PKL,urcm_plan_numeric2.pkl,Numeric planning v2,Experiment artifact
+PKL,urcm_planner_nl.pkl,Natural language planner,Experiment artifact
+PKL,urcm_planner_smt.pkl,SMT planner,Experiment artifact
+PKL,urcm_planner.pkl,Planner experiment,Experiment artifact
+PKL,urcm_pred_ont.pkl,Predicate ontology,Experiment artifact
+PKL,urcm_prior_dbg.pkl,Prior debug snapshot,Experiment artifact
+PKL,urcm_rand_0.pkl through urcm_rand_19.pkl (20 files),Random initialization / ablation sweep (20 seeds),"Ablation sweep artifact - multi-seed experiment, only aggregate results matter"
+PKL,urcm_runtime_grounding.pkl,Runtime grounding,Experiment artifact
+PKL,urcm_scdl_brain.pkl,SCDL training,Experiment artifact
+PKL,urcm_self_evolve.pkl,Self-evolve experiment,Experiment artifact
+PKL,urcm_stress_extreme_refusal.pkl,Stress test extreme refusal,Experiment artifact
+PKL,urcm_stress_extreme.pkl,Stress test extreme,Experiment artifact
+PKL,urcm_stress_hard_int.pkl,Stress test hard int,Experiment artifact
+PKL,urcm_stress_hard.pkl,Stress test hard,Experiment artifact
+PKL,urcm_stress_int_proj.pkl,Stress test int projection,Experiment artifact
+PKL,urcm_stress_mixed.pkl,Stress test mixed,Experiment artifact
+PKL,urcm_trained_brain.pkl,Trained brain checkpoint,Stale - superseded by later training
+PKL,urcm_type_guided.pkl,Type-guided experiment,Experiment artifact
+PKL,urcm_weights.pkl,Model weights dump,Stale checkpoint - binary artifact, use config+seed to reproduce
+DEBUG,analyze_brain_health.py,One-off brain health analysis,Debug script - one-time use, not part of core
+DEBUG,debug_brain.py,Debug brain internals,Debug script - one-time use
+DEBUG,debug_phonemes.py,Debug phoneme mapper,Debug script - one-time use
+DEBUG,debug_topology.py,Debug topology structure,Debug script - one-time use
+DEBUG,debug_training_data.py,Debug training data pipeline,Debug script - one-time use
+DEBUG,check_collision.py,Check name collisions,One-off check - not needed after fix
+DEBUG,check_m_d.py,Check M-D parameters,One-off check
+DEBUG,fix_weights.py,Fix corrupted weights,One-off fix - problem resolved
+DEBUG,smooth_brain.py,Smooth brain weights,One-off experiment
+DEBUG,diagnose_bottleneck.py,Diagnose performance bottleneck,One-off diagnostic
+DEBUG,extract_isre_data.py,Extract ISRE dataset,One-off data extraction
+DEBUG,explore.py,Explore model internals,One-off exploration
+DEBUG,inspect_brain.py,Inspect brain state,One-off inspection
+DEBUG,liberate.py,Memory liberation experiment,One-off experiment
+DEBUG,measure_reversibility.py,Measure reversibility,One-off measurement
+DEBUG,optimize_topology.py,Topology optimization experiment,One-off optimization
+DEBUG,axiom.py,Axiom testing script,Replaced by proper axiom tests in tests/
+DEBUG,benchmark_axiom.py,Axiom benchmark,Replaced by proper benchmarks
+DEBUG,toy_benchmark.py,Toy benchmark,One-off toy experiment
+DEBUG,calculate_training_roadmap.py,Training roadmap calculator,One-off calculator
+DEBUG,ingest_sanskrit_grammar.py,Sanskrit grammar ingestion,One-off data ingestion
+DEBUG,test_grammar_structure.py,Grammar structure test,Duplicated in tests/test_grammar_*.py
+DEBUG,verify_sanskrit.py,Sanskrit verification,One-off verification
+DEBUG,app.py,Web app demo,Prototype - not deployed or maintained
+DEBUG,talk.py,Interactive talk interface,Prototype
+DEBUG,thinking_test.py,Thinking process test,One-off test
+TRAIN,train_brain_10m_parallel.py,10M-param parallel training variant,"Redundant - use train_brain_10m.py or train_urcm.py"
+TRAIN,train_brain_multidataset.py,Multi-dataset training variant,Experiment variant - not current
+TRAIN,train_brain_scdl_fast.py,SCDL fast training variant,Experiment variant - not current
+TRAIN,train_concepts.py,Concept training experiment,Experiment variant - not current
+TRAIN,train_continue.py,Continue training experiment,Experiment variant - not current
+TRAIN,train_conversation.py,Conversation training experiment,Experiment variant - not current
+TRAIN,train_dynamics.py,Dynamics training experiment,Experiment variant - not current
+TRAIN,train_hierarchy.py,Hierarchy training experiment,Experiment variant - not current
+TRAIN,train_identity.py,Identity training experiment,Experiment variant - not current
+VERIFY,verify_axiom.py,Axiom system verification,One-time verification - results in FINAL_VALIDATION_REPORT.md
+VERIFY,verify_canonical_energy.py,Canonical energy verification,One-time verification
+VERIFY,verify_comprehensive.py,Comprehensive verification,One-time verification
+VERIFY,verify_dream_energy.py,Dream energy verification,One-time verification
+VERIFY,verify_energy_descent.py,Energy descent verification,One-time verification
+VERIFY,verify_full_system.py,Full system verification,One-time verification
+VERIFY,verify_hi.py,Hierarchy integration verification,One-time verification
+VERIFY,verify_hierarchy.py,Hierarchy verification,One-time verification
+VERIFY,verify_interim_progress.py,Interim progress check,One-time verification
+VERIFY,verify_internet.py,Internet capability verification,One-time verification
+VERIFY,verify_launch.py,Launch readiness verification,One-time verification
+VERIFY,verify_meaning.py,Meaning verification,One-time verification
+VERIFY,verify_memory.py,Memory verification,One-time verification
+VERIFY,verify_reversibility.py,Reversibility verification,One-time verification
+VERIFY,verify_safety.py,Safety verification,One-time verification
+VERIFY,verify_sandbox.py,Sandbox verification,One-time verification
+VERIFY,verify_scale_test.py,Scale test verification,One-time verification
+VERIFY,verify_tier1_cognition.py,Tier1 cognition verification,One-time verification
+VERIFY,verify_tier1_extended.py,Tier1 extended verification,One-time verification
+VERIFY,verify_urcm.py,URCM system verification,One-time verification
+ROOTTEST,benchmark_consistency.py,Consistency benchmark,Duplicated in benchmarks/
+ROOTTEST,benchmark_optimization.py,Optimization benchmark,Duplicated in benchmarks/
+ROOTTEST,benchmark_performance.py,Performance benchmark,Duplicated in benchmarks/
+ROOTTEST,benchmark_right_brain.py,Right brain benchmark,Duplicated in benchmarks/
+ROOTTEST,benchmark_vs_gpt.py,GPT comparison benchmark,Duplicated in benchmarks/
+ROOTTEST,run_comprehensive_tests.py,Run all tests,Replaced by pytest
+ROOTTEST,run_final_validation.py,Final validation run,One-off run
+ROOTTEST,run_internet_goal.py,Internet goal test,One-off test
+ROOTTEST,run_left_brain_loop.py,Left brain loop test,One-off test
+ROOTTEST,test_alignment.py,Alignment test,Duplicated in tests/
+ROOTTEST,test_executive.py,Executive test,Duplicated in tests/
+ROOTTEST,test_knowledge.py,Knowledge test,Duplicated in tests/
+ROOTTEST,test_logic_gates.py,Logic gates test,Duplicated in tests/
+ROOTTEST,test_midway_strategy.py,Midway strategy test,Duplicated in tests/
+ROOTTEST,test_reasoning.py,Reasoning test,Duplicated in tests/
+STRESS,hard_stress_test.py,Hard stress test,One-off stress test
+STRESS,stress_test_large.py,Large stress test,One-off stress test
+STRESS,stress_test_toddler.py,Toddler stress test,One-off stress test
+STRESS,stress_test.py,Stress test,One-off stress test
+DATA,axioms.txt,Axiom definitions,Duplicated in urcm/core/axioms or config
+DATA,corpus.txt,Training corpus text,Duplicated or downloadable
+DATA,correction_data.txt,Correction data,One-off correction dataset
+DATA,comprehensive_test_results.csv,Test results export,Stale CSV - regenerate with pytest
+DATA,scale_test_results.csv,Scale test results,Stale CSV
+DATA,executive_output.txt,Executive output log,Stale log output
+DATA,kernel-metadata.json,Kaggle kernel metadata,Project-level Kaggle config - keep only if actively pushing kernels
+MISC,reset_and_ingest_all.py,Reset and re-ingest all data,One-off reset script
+MISC,retrain_decoder.py,Retrain decoder,One-off retrain
+MISC,toy_benchmark.py,Toy benchmark,Redundant
+DOCS,CHANGELOG.md,Project changelog,Stale - last entries from initial experiments
+DOCS,FINAL_VALIDATION_REPORT.md,Final validation report,Stale - refers to old experiment results
+DOCS,PITCH.md,Project pitch,"Good to keep as reference, but stale"
+DOCS,PRODUCTION_ROADMAP.md,Production roadmap,Stale roadmap from earlier phase
+DOCS,REQUIREMENTS_AND_TASKS.md,Requirements and tasks,Stale requirements doc
+DOCS,ROADMAP_TO_FINAL.md,Roadmap to final,Stale
+DOCS,TECHNICAL_REFINEMENT.md,Technical refinement notes,Stale
+DOCS,TESTS_NEEDED.md,Tests needed list,Stale - tests already exist
+DOCS,TESTS_STATUS.txt,Tests status,Stale status
+DOCS,linkedin_article.md,LinkedIn article draft,"Personal doc, not project code"
+DOCS,docs/HI,"Unknown doc file, seems orphaned",Orphaned file with unclear purpose
+DOCS,docs/hi 2,"Unknown doc file, seems orphaned",Orphaned file with unclear purpose
+CACHE,__pycache__/,Python bytecode cache,Generated - safe to delete
+CACHE,.hypothesis/,Hypothesis test database,Generated cache
+CACHE,.mypy_cache/,MyPy type cache,Generated cache
+CACHE,.pytest_cache/,Pytest cache,Generated cache
+CACHE,.ruff_cache/,Ruff cache,Generated cache
+CACHE,.venv/,Python virtual environment,Recreate with requirements.txt
+CACHE,.kiro/,Unknown cache directory,Unknown generated cache
+CACHE,logs/,Runtime logs,Generated logs - safe to delete
+CACHE,temp_dataset_repo/,Temporary dataset repository,Temporary data
+MISC,New folder/,Unknown purpose,"Empty or orphaned, Windows 'New Folder'"
+MISC,pages/,Possibly GitHub Pages content,Check if actively deployed
+MISC,tinyllama-1.1b-chat-v1.0.Q4_K_M.gguf,Dowloaded LLM model (1.1GB),Large binary model file - not used by core URCM
+MISC,.env.example,Environment template,Keep - useful for deployment
+MISC,urcm/__pycache__/,Python bytecode cache,Generated - safe to delete
+MISC,urcm/core/__pycache__/,Python bytecode cache,Generated - safe to delete
