@@ -1,5 +1,6 @@
 from urcm.core.working_memory import Planner
 
+
 def test_planner_make_tea_success():
     planner = Planner(max_retries=1)
     steps = planner.decompose("Make tea plan")

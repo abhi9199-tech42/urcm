@@ -1,5 +1,6 @@
 from urcm.core.logic_gates import ClauseGenerator, FormalLogic
 
+
 def test_forall_nested_implies_resolution():
     # Forall x: (P(x) and Q(x)) implies R(x)
     s = "forall x: (P(x) and Q(x)) implies R(x)"

@@ -1,5 +1,6 @@
 from urcm.core.executive import ExecutiveController
 
+
 def test_explain_api_chain_and_contradiction():
     exec = ExecutiveController()
     exec.engine.brain_data = {"relations": [

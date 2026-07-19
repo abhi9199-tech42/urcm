@@ -1,6 +1,7 @@
 from urcm.core.executive import ExecutiveController
 from urcm.core.ingest import KnowledgeIngestion
 
+
 def test_planning_bilinear_infeasible():
     bp = "urcm_bilinear2.pkl"
     ing = KnowledgeIngestion(brain_path=bp)

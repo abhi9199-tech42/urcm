@@ -1,5 +1,6 @@
-from urcm.core.ingest import KnowledgeIngestion
 from urcm.core.executive import ExecutiveController
+from urcm.core.ingest import KnowledgeIngestion
+
 
 def test_type_guided_prefers_consistent_chain():
     bp = "urcm_type_guided.pkl"

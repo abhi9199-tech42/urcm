@@ -1,6 +1,8 @@
+import numpy as np
+
 from urcm.core.ingest import KnowledgeIngestion
 from urcm.core.logic_gates import GeometricLogic
-import numpy as np
+
 
 def test_counterfactual_and_typicality():
     ing = KnowledgeIngestion(l2_dim=512)
@@ -18,7 +20,7 @@ def test_counterfactual_and_typicality():
     grad2 = logic.apply_constraint(bird, "AND", ["birds","animals"], weight=1.0)
     moved2 = bird + grad2
     assert np.linalg.norm(moved2 - target) < np.linalg.norm(bird - target)
-    
+
 def test_not_gate_repels_and_or_gate_selects():
     ing = KnowledgeIngestion(l2_dim=512)
     ing.ingest_text("Cats are mammals. Dogs are mammals.")

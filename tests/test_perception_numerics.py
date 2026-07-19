@@ -1,5 +1,6 @@
 from urcm.core.multimodal import VisualEncoder
 
+
 def test_extract_numeric_attributes_from_filename():
     v = VisualEncoder()
     attrs = v.extract_numeric_attributes("image_5kg_120cm_30ms.jpg")

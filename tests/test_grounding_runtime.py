@@ -1,5 +1,6 @@
-from urcm.core.ingest import KnowledgeIngestion
 from urcm.core.executive import ExecutiveController
+from urcm.core.ingest import KnowledgeIngestion
+
 
 def test_grounding_auto_populates_constraints_and_planner():
     bp = "urcm_runtime_grounding.pkl"

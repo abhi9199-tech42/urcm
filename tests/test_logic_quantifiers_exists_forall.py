@@ -1,5 +1,6 @@
 from urcm.core.logic_gates import FormalLogic
 
+
 def test_exists_forall_skolemization_and_resolution():
     text = "exists x forall y: (R(y) and P(x)) implies S(y). R(a). R(b). P(sk_x)."
     dom = ["a","b"]

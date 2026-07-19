@@ -1,5 +1,6 @@
 from urcm.core.ingest import KnowledgeIngestion
 
+
 def test_self_evolve_one_shot_updates_relations_and_types():
     bp = "urcm_self_evolve.pkl"
     ing = KnowledgeIngestion(brain_path=bp)

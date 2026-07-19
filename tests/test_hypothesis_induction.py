@@ -1,5 +1,6 @@
 from urcm.core.logic_gates import InductionEngine
 
+
 def test_hypothesis_induction_min_support():
     obs = [
         ("instance","dog","animal"),

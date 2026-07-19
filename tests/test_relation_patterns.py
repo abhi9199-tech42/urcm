@@ -1,5 +1,7 @@
 import pytest
+
 from urcm.core.ingest import KnowledgeIngestion
+
 
 def test_quantifiers_and_implication_and_exception_and_coref():
     ing = KnowledgeIngestion(l2_dim=512)

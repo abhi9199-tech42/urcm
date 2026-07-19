@@ -1,4 +1,5 @@
-from urcm.core.logic_gates import MathSymbolics, BayesianNetwork
+from urcm.core.logic_gates import BayesianNetwork, MathSymbolics
+
 
 def test_fraction_simplify_and_ratio_equal():
     assert MathSymbolics.simplify_fraction("8","12") == (2,3)

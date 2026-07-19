@@ -1,5 +1,7 @@
 import numpy as np
+
 from urcm.core.logic_gates import ConstraintGraph
+
 
 def test_exp_envelope_bounds_feasible():
     vars = ["x","w"]

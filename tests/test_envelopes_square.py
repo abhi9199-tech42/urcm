@@ -1,5 +1,6 @@
 from urcm.core.logic_gates import ConstraintGraph
 
+
 def test_square_envelope_bounds_feasible():
     vars = ["x","w"]
     constraints = [

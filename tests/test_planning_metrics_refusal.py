@@ -1,5 +1,6 @@
 from urcm.core.executive import ExecutiveController
 
+
 def test_run_loop_metrics_and_refusal_threshold():
     execu = ExecutiveController()
     execu.set_initial_state("truth")

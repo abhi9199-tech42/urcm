@@ -1,4 +1,5 @@
-from urcm.core.logic_gates import TemporalLogic, SpatialLogic
+from urcm.core.logic_gates import SpatialLogic, TemporalLogic
+
 
 def test_temporal_interval_relations():
     a = (1, 3)

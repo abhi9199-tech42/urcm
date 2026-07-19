@@ -1,5 +1,6 @@
 from urcm.core.executive import ExecutiveController
 
+
 def test_explain_outputs_proof_core_and_refusal_flag():
     e = ExecutiveController()
     e.engine.brain_data = {"relations": [

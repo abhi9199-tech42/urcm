@@ -1,6 +1,8 @@
-import os
 import json
+import os
+
 from urcm.core.system import URCMSystem
+
 
 def _read_events(tmp_dir):
     p = os.path.join(tmp_dir, "logs", "metrics.jsonl")

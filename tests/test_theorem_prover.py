@@ -1,4 +1,5 @@
-from urcm.core.logic_gates import TheoremProver, FormalLogic
+from urcm.core.logic_gates import FormalLogic, TheoremProver
+
 
 def test_resolution_proof_success():
     ast = FormalLogic.to_cnf("(p implies q) and p")

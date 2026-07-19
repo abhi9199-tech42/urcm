@@ -1,5 +1,6 @@
-from urcm.core.ingest import KnowledgeIngestion
 from urcm.core.executive import ExecutiveController
+from urcm.core.ingest import KnowledgeIngestion
+
 
 def test_planner_nonlinear_smt_path():
     bp = "urcm_planner_nl.pkl"

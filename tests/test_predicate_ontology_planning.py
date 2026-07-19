@@ -1,5 +1,6 @@
-from urcm.core.ingest import KnowledgeIngestion
 from urcm.core.executive import ExecutiveController
+from urcm.core.ingest import KnowledgeIngestion
+
 
 def test_predicate_ontology_biases_edges():
     bp = "urcm_pred_ont.pkl"

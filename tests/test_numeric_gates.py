@@ -1,5 +1,7 @@
 import pytest
+
 from urcm.core.logic_gates import NumericLogic
+
 
 def test_numeric_add():
     assert NumericLogic.add("3", "4") == 7.0

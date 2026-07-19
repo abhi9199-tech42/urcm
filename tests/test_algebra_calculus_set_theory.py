@@ -1,4 +1,5 @@
-from urcm.core.logic_gates import AlgebraEngine, SetTheory, CalculusEngine
+from urcm.core.logic_gates import AlgebraEngine, CalculusEngine, SetTheory
+
 
 def test_combine_like_terms():
     out = AlgebraEngine.combine_like_terms("2*x + 3*x")

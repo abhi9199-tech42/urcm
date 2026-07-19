@@ -1,5 +1,6 @@
 from urcm.core.logic_gates import LinearSystem, QuadraticOpt
 
+
 def test_solve_linear_system_2x2():
     A = [[2.0, 1.0],[1.0, 3.0]]
     b = [5.0, 7.0]

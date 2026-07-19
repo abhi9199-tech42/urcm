@@ -1,4 +1,5 @@
 import pytest
+
 from urcm.core.logic_gates import FormalLogic
 
 z3 = pytest.importorskip("z3", reason="z3-solver not installed")

@@ -1,6 +1,8 @@
-import os
 import json
+import os
+
 from urcm.ops.metrics_exporter import render_metrics
+
 
 def write_event(fp, ev):
     with open(fp, "a", encoding="utf-8") as f:

@@ -1,4 +1,5 @@
-from urcm.core.logic_gates import SemanticParser, InductionEngine
+from urcm.core.logic_gates import InductionEngine, SemanticParser
+
 
 def test_parse_all_are_edge():
     edge = SemanticParser.to_edge("All cats are animals.")

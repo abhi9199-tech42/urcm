@@ -17,7 +17,7 @@ spec:
       containers:
       - name: api
         image: urcm-api:latest
-        imagePullPolicy: IfNotPresent
+        imagePullPolicy: Always
         ports:
         - containerPort: 8008
           name: http

@@ -1,6 +1,7 @@
 from urcm.core.executive import ExecutiveController
 from urcm.core.ingest import KnowledgeIngestion
 
+
 def test_assess_mastery_with_seed_relations():
     bp = "urcm_mastery.pkl"
     ing = KnowledgeIngestion(brain_path=bp, l2_dim=512)

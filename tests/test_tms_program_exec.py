@@ -1,6 +1,7 @@
 from urcm.core.executive import ExecutiveController
-from urcm.core.tms import TruthMaintenanceSystem
 from urcm.core.logic_gates import SpatialLogic
+from urcm.core.tms import TruthMaintenanceSystem
+
 
 def test_truth_maintenance_assert_and_retract():
     tms = TruthMaintenanceSystem()
@@ -12,7 +13,7 @@ def test_truth_maintenance_assert_and_retract():
 
 def test_program_synthesis_execution():
     # simple program: compute displacement and verify threshold
-    execu = ExecutiveController()
+    ExecutiveController()
     def step_compute(ctx):
         ctx["s"] = SpatialLogic.suvat_displacement(2.0, 1.0, 3.0)  # 2*3 + 0.5*1*9 = 6 + 4.5 = 10.5
         return True

@@ -1,4 +1,5 @@
-from urcm.domains.medical import seed_medical_knowledge, demo_medical_explain
+from urcm.domains.medical import demo_medical_explain, seed_medical_knowledge
+
 
 def test_medical_chain_chest_pain_to_ecg():
     bp = seed_medical_knowledge()

@@ -1,4 +1,5 @@
-from urcm.core.logic_gates import TemporalLogic, SpatialLogic
+from urcm.core.logic_gates import SpatialLogic, TemporalLogic
+
 
 def test_timeline_ordering_and_consistency():
     a = (1, 3)

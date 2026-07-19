@@ -1,5 +1,6 @@
 from urcm.core.logic_gates import FormalLogic
 
+
 def to_tuple_clause(cl):
     out = []
     for lit in cl:

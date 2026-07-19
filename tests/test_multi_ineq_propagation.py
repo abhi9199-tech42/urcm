@@ -1,5 +1,6 @@
 from urcm.core.logic_gates import ConstraintPropagation
 
+
 def test_two_variable_inequalities_box_intersection():
     res = ConstraintPropagation.solve_inequalities2([
         (1.0, 0.0, 3.0, "<="),

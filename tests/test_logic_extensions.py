@@ -1,7 +1,9 @@
 import os
-import sys
 import re
+import sys
+
 import pytest
+
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from urcm.core.executive import ExecutiveController
@@ -43,7 +45,7 @@ def reason_with(exec_ctrl, relations, question):
     return "yes" if i_end != -1 else "no"
 
 def explain_with(exec_ctrl, start, chain):
-    traj = run(exec_ctrl, start, contexts=chain, steps=8)
+    run(exec_ctrl, start, contexts=chain, steps=8)
     return f"Because {start} are {chain[0]}, and {chain[0]} are {chain[1]}"
 
 @pytest.fixture

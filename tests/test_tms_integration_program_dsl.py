@@ -1,5 +1,6 @@
 from urcm.core.executive import ExecutiveController
 
+
 def test_tms_supports_on_chain_and_retract():
     e = ExecutiveController()
     e.engine.brain_data = {"relations": [
@@ -8,7 +9,6 @@ def test_tms_supports_on_chain_and_retract():
     res = e.explain("a", "c")
     ch = res.get("discovered_chain", [])
     assert ch == ["a","b","c"]
-    key = "chain:a->c"
     assert e.tms.has(("all","a","b"))
     assert e.tms.has(("all","b","c"))
     res2 = e.explain("b","d")

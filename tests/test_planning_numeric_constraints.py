@@ -1,5 +1,6 @@
 from urcm.core.executive import ExecutiveController
 
+
 def test_plan_refuses_on_infeasible_numeric_constraints():
     e = ExecutiveController()
     e.engine.brain_data = {

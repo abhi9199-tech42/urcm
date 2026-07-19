@@ -1,10 +1,11 @@
 """Integration test fixtures and mocks for URCM."""
 import os
 import sys
-import pytest
-import numpy as np
-from unittest.mock import patch
 from pathlib import Path
+from unittest.mock import patch
+
+import numpy as np
+import pytest
 
 
 @pytest.fixture(scope="session")
@@ -60,8 +61,9 @@ def mock_urcm_system(mock_frequency_dim, mock_resonance_dim, mock_latent_dim):
 @pytest.fixture
 def mock_reasoning_path():
     """Create a minimal ReasoningPath for testing downstream consumers."""
-    from urcm.core.data_models import ResonanceState, ReasoningPath
     import time
+
+    from urcm.core.data_models import ReasoningPath, ResonanceState
     state = ResonanceState(
         resonance_vector=np.array([0.5, -0.3, 0.8, -0.1]),
         mu_value=0.75,
@@ -93,7 +95,8 @@ def temp_log_dir(tmp_path, monkeypatch):
 def test_client():
     """FastAPI test client for integration tests."""
     try:
-        from httpx import AsyncClient, ASGITransport
+        from httpx import ASGITransport, AsyncClient
+
         from urcm.api import app
         transport = ASGITransport(app=app)
         client = AsyncClient(transport=transport, base_url="http://test")

@@ -1,5 +1,6 @@
 from urcm.core.ingest import KnowledgeIngestion
 
+
 def discover_chain(relations, start, goal, max_hops=5):
     graph = {}
     for r in relations:

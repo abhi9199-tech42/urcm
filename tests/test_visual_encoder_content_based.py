@@ -1,6 +1,8 @@
 import os
 import tempfile
+
 from urcm.core.multimodal import VisualEncoder
+
 
 def write_temp_file(content: bytes, suffix: str):
     fd, path = tempfile.mkstemp(suffix=suffix)

@@ -1,5 +1,6 @@
 from urcm.core.executive import ExecutiveController
 
+
 def test_planning_bilinear_multihop_infeasible():
     e = ExecutiveController()
     e.engine.brain_data = {

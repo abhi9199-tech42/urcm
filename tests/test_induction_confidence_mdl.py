@@ -1,5 +1,6 @@
 from urcm.core.logic_gates import InductionEngine
 
+
 def test_induction_confidence_and_mdl():
     obs = [
         ("instance","dog","animal"),

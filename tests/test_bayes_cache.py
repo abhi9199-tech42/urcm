@@ -1,5 +1,6 @@
 from urcm.core.logic_gates import BayesianNetwork
 
+
 def test_bayes_cache_correctness():
     bn = BayesianNetwork()
     bn.add_node("A", [], lambda parents: 0.6)

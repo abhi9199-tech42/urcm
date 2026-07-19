@@ -1,6 +1,8 @@
 import time
-from urcm.core.ingest import KnowledgeIngestion
+
 from urcm.core.executive import ExecutiveController
+from urcm.core.ingest import KnowledgeIngestion
+
 
 def test_projection_rounding_integer_preserved_in_counterexample():
     bp = "urcm_stress_int_proj.pkl"

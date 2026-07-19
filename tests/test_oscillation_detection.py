@@ -1,8 +1,11 @@
-import os
 import json
+import os
+
 import numpy as np
+
 from urcm.core.convergence_engine import MuConvergenceEngine
 from urcm.core.data_models import ResonanceState
+
 
 def _read_events(tmp_dir):
     p = os.path.join(tmp_dir, "logs", "metrics.jsonl")

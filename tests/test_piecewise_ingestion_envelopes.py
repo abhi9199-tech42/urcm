@@ -1,5 +1,6 @@
-from urcm.core.ingest import KnowledgeIngestion
 from urcm.core.executive import ExecutiveController
+from urcm.core.ingest import KnowledgeIngestion
+
 
 def test_piecewise_ingestion_planning():
     bp = "urcm_piecewise.pkl"

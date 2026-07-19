@@ -11,23 +11,27 @@ Comprehensive tests for URCM core features:
 9. Pseudoinverse removed (random W_out)
 """
 
-import pytest
-import numpy as np
 import os
 import pickle
-import warnings
 import tempfile
 import time
+import warnings
 
-from urcm.core.resonance_encoder import ResonancePathEncoder
-from urcm.core.safety import SafetyGovernor, SafetyViolation
-from urcm.core.metacognition import MetacognitiveMonitor
+import numpy as np
+import pytest
+
 from urcm.core.data_models import (
-    FrequencyPath, ResonanceState, PhonemeSequence,
-    AttractorState, ReasoningPath, MeshSignal
+    AttractorState,
+    FrequencyPath,
+    MeshSignal,
+    PhonemeSequence,
+    ReasoningPath,
+    ResonanceState,
 )
 from urcm.core.hierarchical_encoder import HierarchicalEncoder
-
+from urcm.core.metacognition import MetacognitiveMonitor
+from urcm.core.resonance_encoder import ResonancePathEncoder
+from urcm.core.safety import SafetyGovernor, SafetyViolation
 
 # ---------------------------------------------------------------------------
 # Helpers
@@ -464,7 +468,7 @@ class TestDataModels:
             FrequencyPath(vectors=np.zeros((5,)), smoothness_score=0.5,
                           phoneme_mapping=[("a", 0)])
 
-    def test_frequency_path_rejects_bad_K(self):
+    def test_frequency_path_rejects_bad_k(self):
         with pytest.raises(ValueError, match="K must be in range"):
             FrequencyPath(vectors=np.zeros((5, 10)), smoothness_score=0.5,
                           phoneme_mapping=[("a", i) for i in range(5)])
@@ -626,7 +630,8 @@ class TestPseudoinverseRemoved:
 
         # Create a tiny training set
         paths = [_make_freq_path(5, 24) for _ in range(3)]
-        gen = lambda: iter([paths])
+        def gen():
+            return iter([paths])
         enc.train_decoder_fast_denoising(gen, noise_level=0.01, ridge_alpha=0.1)
 
         assert not np.allclose(enc.W_out, w_out_before, atol=1e-4), \

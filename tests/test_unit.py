@@ -1,12 +1,13 @@
 """Unit tests for safe_serialization and input_validator modules."""
-import pytest
-import numpy as np
 from pathlib import Path
+
+import numpy as np
+import pytest
 
 
 class TestSafeSerialization:
     def test_safe_load_json_roundtrip(self, tmp_path):
-        from urcm.core.safe_serialization import safe_save_json, safe_load_json
+        from urcm.core.safe_serialization import safe_load_json, safe_save_json
         data = {"key": "value", "num": 42}
         path = str(tmp_path / "test.json")
         assert safe_save_json(path, data)
@@ -14,7 +15,7 @@ class TestSafeSerialization:
         assert loaded == data
 
     def test_safe_load_npy_roundtrip(self, tmp_path):
-        from urcm.core.safe_serialization import safe_save_npy, safe_load_npy
+        from urcm.core.safe_serialization import safe_load_npy, safe_save_npy
         arr = np.array([1.0, 2.0, 3.0])
         path = str(tmp_path / "test.npy")
         assert safe_save_npy(path, arr)
@@ -28,7 +29,7 @@ class TestSafeSerialization:
         assert result is None
 
     def test_verify_integrity(self, tmp_path):
-        from urcm.core.safe_serialization import verify_integrity, compute_sha256
+        from urcm.core.safe_serialization import compute_sha256, verify_integrity
         path = tmp_path / "test.txt"
         path.write_text("hello world")
         assert verify_integrity(str(path))
@@ -74,8 +75,8 @@ class TestSafetyGovernor:
         assert gov.check_energy_ceiling(np.array([1.0, 2.0]))
 
     def test_kernel_lock_env_key(self, monkeypatch):
-        from urcm.core.safety import SafetyGovernor, SafetyViolation
         from urcm.config import reload_settings
+        from urcm.core.safety import SafetyGovernor, SafetyViolation
         monkeypatch.setenv("URCM_ADMIN_KEY", "test-key")
         reload_settings()
         gov = SafetyGovernor()
@@ -84,8 +85,8 @@ class TestSafetyGovernor:
         assert not gov._kernel_locked
 
     def test_kernel_lock_wrong_key(self, monkeypatch):
-        from urcm.core.safety import SafetyGovernor, SafetyViolation
         from urcm.config import reload_settings
+        from urcm.core.safety import SafetyGovernor, SafetyViolation
         monkeypatch.setenv("URCM_ADMIN_KEY", "real-key")
         reload_settings()
         gov = SafetyGovernor()

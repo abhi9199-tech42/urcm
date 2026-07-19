@@ -1,5 +1,6 @@
 from urcm.core.multimodal import VisualEncoder
 
+
 def test_infer_numeric_unit_and_bounds():
     v = VisualEncoder()
     u = v.infer_numeric_unit("nonexistent_image_123.png")

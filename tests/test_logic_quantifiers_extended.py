@@ -1,5 +1,6 @@
 from urcm.core.logic_gates import FormalLogic
 
+
 def test_generate_fol_clauses_and_resolve():
     text = "forall x: (P(x) and Q(x)) implies R(x). P(a). Q(a)."
     domain = ["a"]

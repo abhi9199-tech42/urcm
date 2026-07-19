@@ -1,6 +1,8 @@
 import time
-from urcm.core.ingest import KnowledgeIngestion
+
 from urcm.core.executive import ExecutiveController
+from urcm.core.ingest import KnowledgeIngestion
+
 
 def test_extreme_mixed_envelopes_latency_and_result():
     bp = "urcm_stress_extreme.pkl"

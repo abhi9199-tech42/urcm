@@ -1,6 +1,7 @@
 from urcm.core.executive import ExecutiveController
 from urcm.core.ingest import KnowledgeIngestion
 
+
 def test_planning_execute_with_contingency():
     bp = "urcm_plan_exec.pkl"
     ing = KnowledgeIngestion(brain_path=bp, l2_dim=256)

@@ -44,7 +44,7 @@ spec:
       containers:
       - name: api
         image: urcm-api:latest
-        imagePullPolicy: IfNotPresent
+        imagePullPolicy: Always
         ports:
         - containerPort: 8008
           name: http
@@ -106,7 +106,7 @@ spec:
       containers:
       - name: api
         image: urcm-api:latest
-        imagePullPolicy: IfNotPresent
+        imagePullPolicy: Always
         ports:
         - containerPort: 8008
           name: http
@@ -206,7 +206,7 @@ spec:
     apiVersion: apps/v1
     kind: Deployment
     name: urcm-green
-  minReplicas: 2
+  minReplicas: 0  # Matches initial 0 replicas; update when scaling up
   maxReplicas: 8
   metrics:
   - type: Resource
@@ -223,6 +223,7 @@ spec:
         averageUtilization: 80
 
 ---
+
 # --- PodDisruptionBudget (ensures availability during maintenance) ---
 apiVersion: policy/v1
 kind: PodDisruptionBudget
@@ -248,7 +249,7 @@ metadata:
     app: urcm
     slot: green
 spec:
-  minAvailable: 1
+  minAvailable: 0  # Matches initial 0 replicas; update when scaling up
   selector:
     matchLabels:
       app: urcm

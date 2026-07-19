@@ -1,5 +1,6 @@
 from urcm.core.logic_gates import FormalLogic
 
+
 def test_forall_exists_skolem_grounding_and_resolution():
     text = "forall x exists y: (P(x) and R(y)) implies Q(x). P(a). R(sk_a)."
     dom = ["a"]

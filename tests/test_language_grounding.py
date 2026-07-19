@@ -1,5 +1,6 @@
 from urcm.core.logic_gates import Polytope
 
+
 def test_language_grounding_parser():
     text = "all cats are animals. no foxes are cats. x <= 3 and y >= 1"
     rels = Polytope.parse_relations(text)

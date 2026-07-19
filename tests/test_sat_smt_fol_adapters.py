@@ -1,5 +1,7 @@
 import pytest
-from urcm.core.logic_gates import SATBridge, SMTBridge, FormalLogic
+
+from urcm.core.logic_gates import FormalLogic, SATBridge, SMTBridge
+
 
 def test_sat_bridge_basic():
     # (x1 or x2) and (not x1 or x2) and (x1 or not x2) -> satisfiable

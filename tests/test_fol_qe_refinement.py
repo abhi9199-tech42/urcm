@@ -1,5 +1,6 @@
 from urcm.core.logic_gates import FormalLogic
 
+
 def test_quantifier_eliminate_ground_forall_exists():
     q = "forall x: p(x) implies q(x)"
     out = FormalLogic.quantifier_eliminate_ground(q, ["a","b"])

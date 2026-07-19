@@ -1,5 +1,6 @@
 from urcm.core.executive import ExecutiveController
 
+
 def test_plan_a_star_and_contingency():
     # Build a small brain with relations
     from urcm.core.ingest import KnowledgeIngestion

@@ -1,5 +1,6 @@
 from urcm.core.logic_gates import ConstraintGraph
 
+
 def test_constraint_graph_three_vars():
     vars = ["x","y","z"]
     constraints = [

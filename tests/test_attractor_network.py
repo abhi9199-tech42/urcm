@@ -1,15 +1,17 @@
 
-import pytest
 import numpy as np
+import pytest
+
 from urcm.core.attractor_network import AttractorNetwork
 from urcm.core.data_models import AttractorState
+
 
 class TestAttractorDynamics:
     """
     Validates Property 6: Attractor-Based Semantic Representation.
     Checks Kuramoto dynamics, synchronization, stability analysis, and recall.
     """
-    
+
     @pytest.fixture
     def network(self):
         # 10 oscillators, strong coupling K=5.0
@@ -21,15 +23,15 @@ class TestAttractorDynamics:
         """
         # Start random
         network.set_state(np.random.uniform(0, 2*np.pi, 10))
-        
+
         initial_order = network.get_order_parameter()
-        
+
         # Evolve for some time
         for _ in range(500):
             network.step(dt=0.05)
-            
+
         final_order = network.get_order_parameter()
-        
+
         # Order parameter r should approach 1.0 (Sync)
         # Random start is usually < 0.5
         assert final_order > initial_order, "Network failed to increase order/synchronize"
@@ -42,22 +44,22 @@ class TestAttractorDynamics:
         # Force a perfectly synchronized state
         sync_state = np.zeros(10)
         network.set_state(sync_state)
-        
+
         evals = network.get_stability_eigenvalues()
-        
+
         # For stable sync, max Real part should be <= 0 (ignoring the 0 eigenvalue for global rotation symmetry)
         real_parts = np.real(evals)
-        
+
         # In Kuramoto, the synchronized state (all theta_i equal) is stable for K>0.
         # One eigenvalue is always 0 (rotational invariance).
         # The others should be negative.
-        
+
         # Filter out the zero mode (tolerance)
         non_zero_reals = [r for r in real_parts if abs(r) > 1e-5]
-        
+
         if non_zero_reals:
             assert np.all(np.array(non_zero_reals) < 0), "Synchronized state detected as unstable!"
-            
+
     def test_attractor_identification(self, network):
         """
         Check that the network identifies stored attractors when close.
@@ -70,16 +72,16 @@ class TestAttractorDynamics:
             stability_type="stable",
             semantic_label="Test Pattern"
         )
-        
+
         network.register_attractor(attractor)
-        
+
         # Set network state close to this pattern
         network.set_state(target_phases + np.random.normal(0, 0.01, 10))
-        
+
         identified = network.find_nearest_attractor()
         assert identified is not None
         assert identified.semantic_label == "Test Pattern"
-        
+
         # Set network state far away
         network.set_state(target_phases + np.pi) # Antiphase-ish
         identified_far = network.find_nearest_attractor()
@@ -94,17 +96,17 @@ class TestAttractorDynamics:
         # 2 oscillators
         net = AttractorNetwork(size=2, coupling_strength=2.0)
         net.frequencies = np.zeros(2) # Remove natural freq for simple calc
-        
+
         # Set phases: 0 and pi/2
         # sin(0 - pi/2) = -1
         # sin(pi/2 - 0) = 1
         net.phases = np.array([0.0, np.pi/2])
-        
+
         # dθ1 = 0 + (2/2) * sin(pi/2 - 0) = 1
         # dθ2 = 0 + (2/2) * sin(0 - pi/2) = -1
-        
+
         net.step(dt=0.1)
-        
+
         # Exp: 0 + 1*0.1 = 0.1
         # Exp: pi/2 - 1*0.1 = 1.47
         assert np.isclose(net.phases[0], 0.1, atol=1e-5)

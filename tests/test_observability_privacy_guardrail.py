@@ -1,7 +1,10 @@
-import os
 import json
+import os
+
 import numpy as np
+
 from urcm.core.observability import record_event
+
 
 def _read_last_log_line(log_dir):
     p = os.path.join(log_dir, "logs", "metrics.jsonl")

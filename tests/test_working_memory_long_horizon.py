@@ -1,4 +1,5 @@
-from urcm.core.working_memory import WorkingMemory, Intent
+from urcm.core.working_memory import Intent, WorkingMemory
+
 
 def test_context_capacity_and_interference():
     wm = WorkingMemory()

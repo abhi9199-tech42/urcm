@@ -1,7 +1,8 @@
 """Integration tests for URCM API and core system."""
+from unittest.mock import patch
+
 import numpy as np
 import pytest
-from unittest.mock import patch
 
 
 class TestURCMSystemIntegration:

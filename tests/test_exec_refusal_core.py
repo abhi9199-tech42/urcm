@@ -1,5 +1,6 @@
 from urcm.core.executive import ExecutiveController
 
+
 def test_exec_records_proof_core_on_contradiction():
     e = ExecutiveController()
     e.engine.brain_data = {"relations": [

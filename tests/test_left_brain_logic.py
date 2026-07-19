@@ -1,5 +1,6 @@
-from urcm.core.ingest import KnowledgeIngestion
 from urcm.core.executive import ExecutiveController
+from urcm.core.ingest import KnowledgeIngestion
+
 
 def seed_basic_logic(brain_path: str):
     ing = KnowledgeIngestion(brain_path=brain_path, l2_dim=512)

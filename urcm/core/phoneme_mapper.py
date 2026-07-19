@@ -179,7 +179,7 @@ class PhonemeFrequencyMapper:
 
             # Additional
             'x': [0, 0, 0, 0, 0, 0, 1, 0, 0], 'z': [0, 1, 0, 0, 0, 0, 0, 1, 0],
-            'f': [0, 0, 0, 0, 0, 0, 0, 0, 1], 'w': [0, 1, 0, 0, 0, 0, 0, 0, 1]
+            'f': [0, 0, 0, 0, 0, 0, 0, 0, 1], 'w': [0, 1, 0, 0, 0, 0, 1, 0, 1]
         }
 
         for phoneme, features in feature_definitions.items():
@@ -337,7 +337,7 @@ class TextToPhonemeConverter:
             'a': 'a', 'b': 'b', 'c': 'k', 'd': 'd', 'e': 'e', 'f': 'f',
             'g': 'g', 'h': 'h', 'i': 'i', 'j': 'j', 'k': 'k', 'l': 'l',
             'm': 'm', 'n': 'n', 'o': 'o', 'p': 'p', 'q': 'k', 'r': 'r',
-            's': 's', 't': 't', 'u': 'u', 'v': 'v', 'w': 'v', 'x': 'x',
+            's': 's', 't': 't', 'u': 'u', 'v': 'v', 'w': 'w', 'x': 'x',
             'y': 'y', 'z': 'z'
         }
 

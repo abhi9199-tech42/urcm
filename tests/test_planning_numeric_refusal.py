@@ -1,5 +1,6 @@
-from urcm.core.ingest import KnowledgeIngestion
 from urcm.core.executive import ExecutiveController
+from urcm.core.ingest import KnowledgeIngestion
+
 
 def test_plan_refuses_on_numeric_infeasible_bounds():
     bp = "urcm_plan_numeric.pkl"

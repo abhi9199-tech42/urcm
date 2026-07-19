@@ -1,6 +1,8 @@
 import time
-from urcm.core.ingest import KnowledgeIngestion
+
 from urcm.core.executive import ExecutiveController
+from urcm.core.ingest import KnowledgeIngestion
+
 
 def test_hard_envelopes_performance_and_feasibility():
     bp = "urcm_stress_hard.pkl"

@@ -1,5 +1,6 @@
 from urcm.core.logic_gates import Polytope
 
+
 def test_parse_at_least_at_most():
     text = "x at least 3 and y at most 5"
     cs = Polytope.parse_numeric_constraints(text)

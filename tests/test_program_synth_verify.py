@@ -1,5 +1,6 @@
 from urcm.core.logic_gates import ProgramSynth
 
+
 def test_program_synth_sum():
     code = ProgramSynth.synthesize({"goal":"sum two numbers"})
     ok = ProgramSynth.verify(code, [((2,3),5), ((0,0),0)])

@@ -1,6 +1,8 @@
 import os
-from urcm.core.ingest import KnowledgeIngestion
+
 from urcm.core.executive import ExecutiveController
+from urcm.core.ingest import KnowledgeIngestion
+
 
 def test_explain_candidates_prioritization():
     brain_path = "urcm_prioritization.pkl"

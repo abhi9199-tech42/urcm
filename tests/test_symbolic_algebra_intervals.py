@@ -1,5 +1,7 @@
 import pytest
+
 from urcm.core.logic_gates import MathSymbolics
+
 
 def test_rewrite_distribute_and_factor():
     d = MathSymbolics.rewrite_distribute("a*(b+c)")

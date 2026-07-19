@@ -1,6 +1,7 @@
 """Locust load tests for URCM API."""
-from locust import HttpUser, task, between
 import json
+
+from locust import HttpUser, between, task
 
 
 class URCMHealthUser(HttpUser):

@@ -1,7 +1,9 @@
 import random
 import time
-from urcm.core.ingest import KnowledgeIngestion
+
 from urcm.core.executive import ExecutiveController
+from urcm.core.ingest import KnowledgeIngestion
+
 
 def test_randomized_envelopes_latency_distribution():
     random.seed(42)

@@ -1,5 +1,6 @@
 from urcm.core.logic_gates import FormalLogic
 
+
 def test_multi_arity_structured_forall_exists():
     text = "forall x exists y: (Rel(x,y) and P(x)) implies S(x,y). Rel(a,sk_a). P(a)."
     dom = ["a"]

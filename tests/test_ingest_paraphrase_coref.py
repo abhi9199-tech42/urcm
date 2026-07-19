@@ -1,5 +1,6 @@
 from urcm.core.ingest import KnowledgeIngestion
 
+
 def test_paraphrase_can_and_demonstratives_coref_and_thus_implies():
     ing = KnowledgeIngestion(l2_dim=512)
     ing.ingest_text("All birds are animals. They are able_to_fly.")

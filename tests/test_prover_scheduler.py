@@ -1,5 +1,6 @@
 from urcm.core.logic_gates import FormalLogic, ProverScheduler
 
+
 def test_prover_scheduler_success():
     ast = FormalLogic.to_cnf("(p implies q) and p")
     clauses = FormalLogic._collect_clauses(ast)

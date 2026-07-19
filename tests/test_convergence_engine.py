@@ -1,8 +1,10 @@
 
-import pytest
 import numpy as np
+import pytest
+
 from urcm.core.convergence_engine import MuConvergenceEngine
-from urcm.core.data_models import ResonanceState, ReasoningPath
+from urcm.core.data_models import ReasoningPath, ResonanceState
+
 
 class TestMuConvergence:
     """
@@ -13,12 +15,12 @@ class TestMuConvergence:
     @pytest.fixture
     def engine(self):
         return MuConvergenceEngine(
-            rho_threshold=0.1, 
+            rho_threshold=0.1,
             convergence_epsilon=0.01,
             max_steps=10,
             competition_beam_width=2
         )
-        
+
     def create_dummy_state(self, vector_val=1.0, timestamp=0.0) -> ResonanceState:
         """Helper to create a simple state."""
         vec = np.ones(10) * vector_val
@@ -41,19 +43,19 @@ class TestMuConvergence:
         # Create a "raw" state with 0 metrics
         raw_vec = np.array([1.0, 0.0, 0.0, 0.0]) # high entropy or low?
         # Actually [1,0,0,0] is low entropy (peaky), so High Rho.
-        
+
         raw_state = ResonanceState(
             resonance_vector=raw_vec,
             mu_value=0.0, rho_density=0.0, chi_cost=0.0,
             stability_score=0.0, oscillation_phase=0.0, timestamp=0.0
         )
-        
+
         processed = engine.calculate_state_metrics(raw_state)
-        
+
         assert processed.rho_density > 0, "Rho should be calculated"
         assert processed.chi_cost > 0, "Chi should be calculated (norm)"
         assert processed.mu_value > 0, "Mu should be calculated"
-        
+
     def test_convergence_detection(self, engine):
         """
         Checks Property 4: μ-Convergence.
@@ -67,10 +69,10 @@ class TestMuConvergence:
             convergence_achieved=False,
             termination_reason="Running"
         )
-        
+
         is_converged = engine.check_convergence(path)
         assert is_converged is True, "Engine failed to detect convergence"
-        
+
         path_diverging = ReasoningPath(
             initial_state=self.create_dummy_state(),
             intermediate_states=[self.create_dummy_state()],
@@ -88,19 +90,19 @@ class TestMuConvergence:
         """
         # Beam width is 2. We provide 3 paths.
 
-        
+
         # We'll mock the objects since constructor is verbose
         class MockPath:
             def __init__(self, mu): self.mu_trajectory = [mu]
-            
+
         candidates = [MockPath(0.1), MockPath(0.9), MockPath(0.5)] # Unsorted
-        
+
         winners = engine.evaluate_paths(candidates)
-        
+
         assert len(winners) == 2, "Did not respect beam width"
         assert winners[0].mu_trajectory[0] == 0.9, "Best path missing"
         assert winners[1].mu_trajectory[0] == 0.5, "Second best path missing"
-        
+
     def test_infinite_loop_prevention(self, engine):
         """
         Checks Requirements for termination limits.
@@ -111,11 +113,11 @@ class TestMuConvergence:
             # Create a state slightly better each time
             new_val = state.resonance_vector[0] + 0.1
             return [self.create_dummy_state(vector_val=new_val)]
-            
+
         initial = self.create_dummy_state(vector_val=1.0)
-        
+
         results = engine.run_reasoning_loop(initial, runaway_generator)
-        
+
         # Should finish with "Max Steps Reached"
         assert len(results) > 0
         best_path = results[0]
@@ -124,5 +126,5 @@ class TestMuConvergence:
         # Note: path length = intermediates + 2 (start/end) usually?
         # In this implementation: len(mu_trajectory) = iterations + 1. 2 iterations -> 3 mus.
         # max_steps=10.
-        assert len(best_path.mu_trajectory) >= 10 
+        assert len(best_path.mu_trajectory) >= 10
 

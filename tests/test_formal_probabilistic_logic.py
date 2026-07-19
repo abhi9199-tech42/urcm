@@ -1,5 +1,6 @@
 from urcm.core.logic_gates import FormalLogic, ProbabilisticLogic
 
+
 def test_cnf_and_resolution_simple():
     cnf = FormalLogic.to_cnf("a implies b")
     clauses = FormalLogic._collect_clauses(cnf)

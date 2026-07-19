@@ -1,5 +1,6 @@
 from urcm.core.logic_gates import ConstraintGraph
 
+
 def test_envelope_integration_bounds_w():
     vars = ["x","y","w"]
     constraints = [

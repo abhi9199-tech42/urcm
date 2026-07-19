@@ -1,4 +1,5 @@
-from urcm.core.logic_gates import Polytope, ConstraintGraph
+from urcm.core.logic_gates import ConstraintGraph, Polytope
+
 
 def test_polytope_bounds_and_contains():
     P = Polytope([

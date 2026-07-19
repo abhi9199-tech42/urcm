@@ -1,6 +1,8 @@
-import os
 import json
-from urcm.ops.metrics_exporter import render_metrics, compute_health
+import os
+
+from urcm.ops.metrics_exporter import compute_health, render_metrics
+
 
 def write(fp, ev):
     with open(fp, "a", encoding="utf-8") as f:
